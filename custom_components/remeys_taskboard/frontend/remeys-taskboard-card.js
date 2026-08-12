@@ -11,6 +11,168 @@ const TEXT = {
   ja: { tasks:"タスク", loading:"タスクを読み込んでいます…", noTasks:"該当するタスクはありません", overdue:"期限切れ", overdueSince:(n)=>`${n}日超過`, none:"なし", add:"新しいタスク", edit:"タスクを編集", deleteTask:"タスクを削除", confirmDelete:(name)=>`「${name}」を完全に削除しますか？`, close:"閉じる", complete:"完了にする", moveComplete:"移動または完了にする", confirm:(name)=>`「${name}」を完了にしますか？`, noDate:"期限なし", overdueDays:(n)=>`${n}日超過`, yesterday:"昨日が期限", today:"今日", tomorrow:"明日", inDays:(n)=>`${n}日後`, history:"完了履歴", noHistory:"完了記録はまだありません。", task:"タスク", knownTasks:"既存のタスク", area:"部屋 / エリア", assignee:"担当者", rooms:"部屋", assignees:"担当者", icon:"アイコン", last:"前回の完了", due:"次の期限", dueTime:"期限時刻", duration:"所要時間（分）", repeat:"繰り返し間隔", unit:"単位", days:"日", weeks:"週", months:"か月", allowedDays:"対象の曜日", allowedMonths:"対象の月", toggleHint:"クリックして使用/除外", monthHint:"選択されていない月は除外されます", notes:"メモ", cancel:"キャンセル", save:"タスクを保存", saveChanges:"変更を保存" },
 };
 
+const CARD_EDITOR_TEXT = {
+  en: {
+    "Grundansicht":"General", "Titel":"Title", "Ansicht":"View", "Liste":"List", "Woche":"Week",
+    "Woche / Tage":"Week / days", "Mehrere Wochen":"Multiple weeks", "Monat":"Month",
+    "Sortierung":"Sorting", "Nächste Fälligkeit zuerst":"Next due date first", "Zuletzt erledigt zuerst":"Most recently completed first",
+    "Zuerst nach Area gruppieren":"Group by area first", "Erledigt in den letzten X Tagen":"Completed in the last X days",
+    "Nächste X Tage (0 = nur heute)":"Next X days (0 = today only)", "Überfällige Aufgaben einbeziehen":"Include overdue tasks",
+    "Fortschrittsanzeige":"Progress display", "Nichts":"None", "Ring um das Icon":"Ring around icon", "Fortschrittsbalken":"Progress bar",
+    "Raum bei jeder Aufgabe anzeigen":"Show room on every task", "Zeitraum":"Period", "Nächste X Tage":"Next X days",
+    "Laufende Woche":"Current week", "Ausrichtung":"Layout", "Horizontal":"Horizontal", "Vertikal":"Vertical",
+    "Anzahl Tage (1–7)":"Number of days (1–7)", "Anzahl Wochen (2–6)":"Number of weeks (2–6)",
+    "Raum bei Aufgaben anzeigen":"Show room on tasks", "Kalender-Aufgaben":"Calendar tasks", "Wochenstart":"Week starts on",
+    "Montag":"Monday", "Sonntag":"Sunday", "Überfällige Aufgaben als eigene Spalte":"Show overdue tasks in a separate column",
+    "Position der Überfällig-Spalte":"Overdue-column position", "Links":"Left", "Rechts":"Right",
+    "Wochenenden dezent hervorheben":"Subtly highlight weekends", "Darstellung":"Appearance", "Sprache":"Language",
+    "Automatisch (Home Assistant)":"Automatic (Home Assistant)", "Deutsch":"German", "Abstände":"Spacing", "Kompakt":"Compact",
+    "Komfortabel":"Comfortable", "Farbstil":"Color style", "Kontrast":"Contrast", "Akzentfarbe (optional, z. B. #5b8def)":"Accent color (optional, e.g. #5b8def)",
+    "Schriftgrößenfaktor (70–180 %)":"Font-size scale (70–180%)", "Schriftart":"Font family", "Systemschrift":"System font",
+    "Abgerundet":"Rounded", "Serifenschrift":"Serif", "Schriftstärke":"Font weight", "Leicht":"Light", "Normal":"Normal",
+    "Mittel":"Medium", "Halbfett":"Semi-bold", "Fett":"Bold", "Hintergrund der gesamten Kachel transparent":"Transparent card background",
+    "Kachelbreite (3–12 Spalten)":"Card width (3–12 columns)", "Kachelhöhe (2–12 Zeilen)":"Card height (2–12 rows)",
+    "Aufgabenfilter":"Task filters", "Räume / Areas":"Rooms / areas", "Keine Auswahl zeigt Aufgaben aus allen Räumen.":"No selection shows tasks from all rooms.",
+    "Noch keine Räume aus Aufgaben verfügbar.":"No rooms from tasks available yet.", "Aufgaben werden geladen …":"Loading tasks …",
+    "Zuständige / Assignees":"Assignees", "Keine Auswahl zeigt Aufgaben aller Personen.":"No selection shows tasks for all people.",
+    "Nicht zugewiesen":"Unassigned", "Kalendertermine":"Calendar events", "Termine aus Home-Assistant-Kalendern anzeigen":"Show events from Home Assistant calendars",
+    "Kalender-Entity":"Calendar entity", "Anzeigename":"Display name", "HA-Symbol":"HA icon", "Externe Icon-ID / URL":"External icon ID / URL",
+    "calendar.familie":"calendar.family", "Familie":"Family", "ri:calendar-line oder /local/icon.png":"ri:calendar-line or /local/icon.png",
+    "Farbe":"Color", "Kalender entfernen":"Remove calendar", "+ Kalender hinzufügen":"+ Add calendar", "Symbol":"Icon",
+    "Bedienung":"Interaction", "Erledigen vor dem Speichern bestätigen":"Confirm before marking complete",
+    "Aufgaben löschen erlauben (Admin-Modus)":"Allow task deletion (admin mode)",
+    "Wenn deaktiviert, können Aufgaben weiterhin erledigt, verschoben und bearbeitet werden. Nur die Löschfunktion wird in dieser Karte ausgeblendet.":"When disabled, tasks can still be completed, moved, and edited. Only deletion is hidden on this card."
+  }
+};
+
+CARD_EDITOR_TEXT.fr = {
+  "Grundansicht":"Général", "Titel":"Titre", "Ansicht":"Vue", "Liste":"Liste", "Woche":"Semaine",
+  "Woche / Tage":"Semaine / jours", "Mehrere Wochen":"Plusieurs semaines", "Monat":"Mois",
+  "Sortierung":"Tri", "Nächste Fälligkeit zuerst":"Prochaine échéance en premier", "Zuletzt erledigt zuerst":"Dernières tâches terminées en premier",
+  "Zuerst nach Area gruppieren":"Regrouper d’abord par zone", "Erledigt in den letzten X Tagen":"Terminées au cours des X derniers jours",
+  "Nächste X Tage (0 = nur heute)":"X prochains jours (0 = aujourd’hui seulement)", "Überfällige Aufgaben einbeziehen":"Inclure les tâches en retard",
+  "Fortschrittsanzeige":"Affichage de la progression", "Nichts":"Aucun", "Ring um das Icon":"Anneau autour de l’icône", "Fortschrittsbalken":"Barre de progression",
+  "Raum bei jeder Aufgabe anzeigen":"Afficher la pièce sur chaque tâche", "Zeitraum":"Période", "Nächste X Tage":"X prochains jours",
+  "Laufende Woche":"Semaine en cours", "Ausrichtung":"Disposition", "Horizontal":"Horizontale", "Vertikal":"Verticale",
+  "Anzahl Tage (1–7)":"Nombre de jours (1–7)", "Anzahl Wochen (2–6)":"Nombre de semaines (2–6)",
+  "Raum bei Aufgaben anzeigen":"Afficher la pièce sur les tâches", "Kalender-Aufgaben":"Tâches du calendrier", "Wochenstart":"Début de la semaine",
+  "Montag":"Lundi", "Sonntag":"Dimanche", "Überfällige Aufgaben als eigene Spalte":"Afficher les tâches en retard dans une colonne séparée",
+  "Position der Überfällig-Spalte":"Position de la colonne des retards", "Links":"À gauche", "Rechts":"À droite",
+  "Wochenenden dezent hervorheben":"Mettre discrètement en évidence les week-ends", "Darstellung":"Apparence", "Sprache":"Langue",
+  "Automatisch (Home Assistant)":"Automatique (Home Assistant)", "Deutsch":"Allemand", "Abstände":"Espacement", "Kompakt":"Compact",
+  "Komfortabel":"Confortable", "Farbstil":"Style de couleurs", "Kontrast":"Contraste", "Akzentfarbe (optional, z. B. #5b8def)":"Couleur d’accentuation (facultative, ex. #5b8def)",
+  "Schriftgrößenfaktor (70–180 %)":"Échelle de la police (70–180 %)", "Schriftart":"Police", "Systemschrift":"Police système",
+  "Abgerundet":"Arrondie", "Serifenschrift":"Avec empattements", "Schriftstärke":"Graisse", "Leicht":"Légère", "Normal":"Normale",
+  "Mittel":"Moyenne", "Halbfett":"Semi-grasse", "Fett":"Grasse", "Hintergrund der gesamten Kachel transparent":"Arrière-plan transparent de la carte",
+  "Kachelbreite (3–12 Spalten)":"Largeur de la carte (3–12 colonnes)", "Kachelhöhe (2–12 Zeilen)":"Hauteur de la carte (2–12 lignes)",
+  "Aufgabenfilter":"Filtres des tâches", "Räume / Areas":"Pièces / zones", "Keine Auswahl zeigt Aufgaben aus allen Räumen.":"Sans sélection, les tâches de toutes les pièces sont affichées.",
+  "Noch keine Räume aus Aufgaben verfügbar.":"Aucune pièce provenant des tâches n’est encore disponible.", "Aufgaben werden geladen …":"Chargement des tâches…",
+  "Zuständige / Assignees":"Responsables", "Keine Auswahl zeigt Aufgaben aller Personen.":"Sans sélection, les tâches de toutes les personnes sont affichées.",
+  "Nicht zugewiesen":"Non attribuées", "Kalendertermine":"Événements du calendrier", "Termine aus Home-Assistant-Kalendern anzeigen":"Afficher les événements des calendriers Home Assistant",
+  "Kalender-Entity":"Entité de calendrier", "Anzeigename":"Nom affiché", "HA-Symbol":"Icône HA", "Externe Icon-ID / URL":"ID d’icône externe / URL",
+  "calendar.familie":"calendar.famille", "Familie":"Famille", "ri:calendar-line oder /local/icon.png":"ri:calendar-line ou /local/icon.png",
+  "Farbe":"Couleur", "Kalender entfernen":"Supprimer le calendrier", "+ Kalender hinzufügen":"+ Ajouter un calendrier", "Symbol":"Icône",
+  "Bedienung":"Interaction", "Erledigen vor dem Speichern bestätigen":"Confirmer avant de marquer comme terminée",
+  "Aufgaben löschen erlauben (Admin-Modus)":"Autoriser la suppression des tâches (mode administrateur)",
+  "Wenn deaktiviert, können Aufgaben weiterhin erledigt, verschoben und bearbeitet werden. Nur die Löschfunktion wird in dieser Karte ausgeblendet.":"Si cette option est désactivée, les tâches peuvent toujours être terminées, déplacées et modifiées. Seule la suppression est masquée sur cette carte."
+};
+
+CARD_EDITOR_TEXT.es = {
+  "Grundansicht":"General", "Titel":"Título", "Ansicht":"Vista", "Liste":"Lista", "Woche":"Semana",
+  "Woche / Tage":"Semana / días", "Mehrere Wochen":"Varias semanas", "Monat":"Mes",
+  "Sortierung":"Orden", "Nächste Fälligkeit zuerst":"Próxima fecha límite primero", "Zuletzt erledigt zuerst":"Completadas más recientemente primero",
+  "Zuerst nach Area gruppieren":"Agrupar primero por área", "Erledigt in den letzten X Tagen":"Completadas en los últimos X días",
+  "Nächste X Tage (0 = nur heute)":"Próximos X días (0 = solo hoy)", "Überfällige Aufgaben einbeziehen":"Incluir tareas atrasadas",
+  "Fortschrittsanzeige":"Indicador de progreso", "Nichts":"Ninguno", "Ring um das Icon":"Anillo alrededor del icono", "Fortschrittsbalken":"Barra de progreso",
+  "Raum bei jeder Aufgabe anzeigen":"Mostrar la habitación en cada tarea", "Zeitraum":"Período", "Nächste X Tage":"Próximos X días",
+  "Laufende Woche":"Semana actual", "Ausrichtung":"Disposición", "Horizontal":"Horizontal", "Vertikal":"Vertical",
+  "Anzahl Tage (1–7)":"Número de días (1–7)", "Anzahl Wochen (2–6)":"Número de semanas (2–6)",
+  "Raum bei Aufgaben anzeigen":"Mostrar la habitación en las tareas", "Kalender-Aufgaben":"Tareas del calendario", "Wochenstart":"Inicio de la semana",
+  "Montag":"Lunes", "Sonntag":"Domingo", "Überfällige Aufgaben als eigene Spalte":"Mostrar tareas atrasadas en una columna separada",
+  "Position der Überfällig-Spalte":"Posición de la columna de atrasos", "Links":"Izquierda", "Rechts":"Derecha",
+  "Wochenenden dezent hervorheben":"Resaltar sutilmente los fines de semana", "Darstellung":"Apariencia", "Sprache":"Idioma",
+  "Automatisch (Home Assistant)":"Automático (Home Assistant)", "Deutsch":"Alemán", "Abstände":"Espaciado", "Kompakt":"Compacto",
+  "Komfortabel":"Cómodo", "Farbstil":"Estilo de color", "Kontrast":"Contraste", "Akzentfarbe (optional, z. B. #5b8def)":"Color de acento (opcional, p. ej. #5b8def)",
+  "Schriftgrößenfaktor (70–180 %)":"Escala de fuente (70–180 %)", "Schriftart":"Tipo de letra", "Systemschrift":"Fuente del sistema",
+  "Abgerundet":"Redondeada", "Serifenschrift":"Con serifas", "Schriftstärke":"Grosor de fuente", "Leicht":"Ligero", "Normal":"Normal",
+  "Mittel":"Medio", "Halbfett":"Seminegrita", "Fett":"Negrita", "Hintergrund der gesamten Kachel transparent":"Fondo transparente de la tarjeta",
+  "Kachelbreite (3–12 Spalten)":"Ancho de la tarjeta (3–12 columnas)", "Kachelhöhe (2–12 Zeilen)":"Altura de la tarjeta (2–12 filas)",
+  "Aufgabenfilter":"Filtros de tareas", "Räume / Areas":"Habitaciones / áreas", "Keine Auswahl zeigt Aufgaben aus allen Räumen.":"Sin selección se muestran las tareas de todas las habitaciones.",
+  "Noch keine Räume aus Aufgaben verfügbar.":"Todavía no hay habitaciones disponibles en las tareas.", "Aufgaben werden geladen …":"Cargando tareas…",
+  "Zuständige / Assignees":"Responsables", "Keine Auswahl zeigt Aufgaben aller Personen.":"Sin selección se muestran las tareas de todas las personas.",
+  "Nicht zugewiesen":"Sin asignar", "Kalendertermine":"Eventos del calendario", "Termine aus Home-Assistant-Kalendern anzeigen":"Mostrar eventos de calendarios de Home Assistant",
+  "Kalender-Entity":"Entidad de calendario", "Anzeigename":"Nombre visible", "HA-Symbol":"Icono de HA", "Externe Icon-ID / URL":"ID de icono externo / URL",
+  "calendar.familie":"calendar.familia", "Familie":"Familia", "ri:calendar-line oder /local/icon.png":"ri:calendar-line o /local/icon.png",
+  "Farbe":"Color", "Kalender entfernen":"Eliminar calendario", "+ Kalender hinzufügen":"+ Añadir calendario", "Symbol":"Icono",
+  "Bedienung":"Interacción", "Erledigen vor dem Speichern bestätigen":"Confirmar antes de marcar como completada",
+  "Aufgaben löschen erlauben (Admin-Modus)":"Permitir eliminar tareas (modo administrador)",
+  "Wenn deaktiviert, können Aufgaben weiterhin erledigt, verschoben und bearbeitet werden. Nur die Löschfunktion wird in dieser Karte ausgeblendet.":"Si se desactiva, las tareas se pueden seguir completando, moviendo y editando. Solo se oculta la función de eliminación en esta tarjeta."
+};
+
+CARD_EDITOR_TEXT.nl = {
+  "Grundansicht":"Algemeen", "Titel":"Titel", "Ansicht":"Weergave", "Liste":"Lijst", "Woche":"Week",
+  "Woche / Tage":"Week / dagen", "Mehrere Wochen":"Meerdere weken", "Monat":"Maand",
+  "Sortierung":"Sortering", "Nächste Fälligkeit zuerst":"Eerstvolgende vervaldatum eerst", "Zuletzt erledigt zuerst":"Laatst voltooide eerst",
+  "Zuerst nach Area gruppieren":"Eerst groeperen op zone", "Erledigt in den letzten X Tagen":"Voltooid in de afgelopen X dagen",
+  "Nächste X Tage (0 = nur heute)":"Volgende X dagen (0 = alleen vandaag)", "Überfällige Aufgaben einbeziehen":"Achterstallige taken opnemen",
+  "Fortschrittsanzeige":"Voortgangsweergave", "Nichts":"Geen", "Ring um das Icon":"Ring rond pictogram", "Fortschrittsbalken":"Voortgangsbalk",
+  "Raum bei jeder Aufgabe anzeigen":"Kamer bij elke taak tonen", "Zeitraum":"Periode", "Nächste X Tage":"Volgende X dagen",
+  "Laufende Woche":"Huidige week", "Ausrichtung":"Indeling", "Horizontal":"Horizontaal", "Vertikal":"Verticaal",
+  "Anzahl Tage (1–7)":"Aantal dagen (1–7)", "Anzahl Wochen (2–6)":"Aantal weken (2–6)",
+  "Raum bei Aufgaben anzeigen":"Kamer bij taken tonen", "Kalender-Aufgaben":"Kalendertaken", "Wochenstart":"Begin van de week",
+  "Montag":"Maandag", "Sonntag":"Zondag", "Überfällige Aufgaben als eigene Spalte":"Achterstallige taken in een aparte kolom tonen",
+  "Position der Überfällig-Spalte":"Positie van kolom met achterstallige taken", "Links":"Links", "Rechts":"Rechts",
+  "Wochenenden dezent hervorheben":"Weekenden subtiel markeren", "Darstellung":"Weergave", "Sprache":"Taal",
+  "Automatisch (Home Assistant)":"Automatisch (Home Assistant)", "Deutsch":"Duits", "Abstände":"Afstand", "Kompakt":"Compact",
+  "Komfortabel":"Comfortabel", "Farbstil":"Kleurstijl", "Kontrast":"Contrast", "Akzentfarbe (optional, z. B. #5b8def)":"Accentkleur (optioneel, bijv. #5b8def)",
+  "Schriftgrößenfaktor (70–180 %)":"Lettergrootteschaal (70–180%)", "Schriftart":"Lettertype", "Systemschrift":"Systeemlettertype",
+  "Abgerundet":"Afgerond", "Serifenschrift":"Schreeflettertype", "Schriftstärke":"Letterdikte", "Leicht":"Licht", "Normal":"Normaal",
+  "Mittel":"Gemiddeld", "Halbfett":"Halfvet", "Fett":"Vet", "Hintergrund der gesamten Kachel transparent":"Transparante kaartachtergrond",
+  "Kachelbreite (3–12 Spalten)":"Kaartbreedte (3–12 kolommen)", "Kachelhöhe (2–12 Zeilen)":"Kaarthoogte (2–12 rijen)",
+  "Aufgabenfilter":"Taakfilters", "Räume / Areas":"Kamers / zones", "Keine Auswahl zeigt Aufgaben aus allen Räumen.":"Zonder selectie worden taken uit alle kamers getoond.",
+  "Noch keine Räume aus Aufgaben verfügbar.":"Er zijn nog geen kamers uit taken beschikbaar.", "Aufgaben werden geladen …":"Taken worden geladen…",
+  "Zuständige / Assignees":"Verantwoordelijken", "Keine Auswahl zeigt Aufgaben aller Personen.":"Zonder selectie worden taken van alle personen getoond.",
+  "Nicht zugewiesen":"Niet toegewezen", "Kalendertermine":"Kalendergebeurtenissen", "Termine aus Home-Assistant-Kalendern anzeigen":"Gebeurtenissen uit Home Assistant-kalenders tonen",
+  "Kalender-Entity":"Kalenderentiteit", "Anzeigename":"Weergavenaam", "HA-Symbol":"HA-pictogram", "Externe Icon-ID / URL":"Externe pictogram-ID / URL",
+  "calendar.familie":"calendar.gezin", "Familie":"Gezin", "ri:calendar-line oder /local/icon.png":"ri:calendar-line of /local/icon.png",
+  "Farbe":"Kleur", "Kalender entfernen":"Kalender verwijderen", "+ Kalender hinzufügen":"+ Kalender toevoegen", "Symbol":"Pictogram",
+  "Bedienung":"Bediening", "Erledigen vor dem Speichern bestätigen":"Bevestigen voordat een taak als voltooid wordt gemarkeerd",
+  "Aufgaben löschen erlauben (Admin-Modus)":"Verwijderen van taken toestaan (beheerdersmodus)",
+  "Wenn deaktiviert, können Aufgaben weiterhin erledigt, verschoben und bearbeitet werden. Nur die Löschfunktion wird in dieser Karte ausgeblendet.":"Als dit is uitgeschakeld, kunnen taken nog steeds worden voltooid, verplaatst en bewerkt. Alleen verwijderen wordt op deze kaart verborgen."
+};
+
+CARD_EDITOR_TEXT.ja = {
+  "Grundansicht":"基本設定", "Titel":"タイトル", "Ansicht":"表示", "Liste":"リスト", "Woche":"週",
+  "Woche / Tage":"週 / 日", "Mehrere Wochen":"複数週", "Monat":"月",
+  "Sortierung":"並び順", "Nächste Fälligkeit zuerst":"期限が近い順", "Zuletzt erledigt zuerst":"最近完了した順",
+  "Zuerst nach Area gruppieren":"最初にエリアでグループ化", "Erledigt in den letzten X Tagen":"過去X日間に完了",
+  "Nächste X Tage (0 = nur heute)":"今後X日間（0 = 今日のみ）", "Überfällige Aufgaben einbeziehen":"期限切れのタスクを含める",
+  "Fortschrittsanzeige":"進捗表示", "Nichts":"なし", "Ring um das Icon":"アイコンの周囲にリング", "Fortschrittsbalken":"進捗バー",
+  "Raum bei jeder Aufgabe anzeigen":"各タスクに部屋を表示", "Zeitraum":"期間", "Nächste X Tage":"今後X日間",
+  "Laufende Woche":"今週", "Ausrichtung":"レイアウト", "Horizontal":"横", "Vertikal":"縦",
+  "Anzahl Tage (1–7)":"日数（1～7）", "Anzahl Wochen (2–6)":"週数（2～6）",
+  "Raum bei Aufgaben anzeigen":"タスクに部屋を表示", "Kalender-Aufgaben":"カレンダーのタスク", "Wochenstart":"週の開始曜日",
+  "Montag":"月曜日", "Sonntag":"日曜日", "Überfällige Aufgaben als eigene Spalte":"期限切れのタスクを別の列に表示",
+  "Position der Überfällig-Spalte":"期限切れ列の位置", "Links":"左", "Rechts":"右",
+  "Wochenenden dezent hervorheben":"週末を控えめに強調", "Darstellung":"外観", "Sprache":"言語",
+  "Automatisch (Home Assistant)":"自動（Home Assistant）", "Deutsch":"ドイツ語", "Abstände":"間隔", "Kompakt":"コンパクト",
+  "Komfortabel":"ゆったり", "Farbstil":"カラースタイル", "Kontrast":"コントラスト", "Akzentfarbe (optional, z. B. #5b8def)":"アクセントカラー（任意、例：#5b8def）",
+  "Schriftgrößenfaktor (70–180 %)":"文字サイズ（70～180%）", "Schriftart":"フォント", "Systemschrift":"システムフォント",
+  "Abgerundet":"丸みのあるフォント", "Serifenschrift":"セリフ体", "Schriftstärke":"文字の太さ", "Leicht":"細字", "Normal":"標準",
+  "Mittel":"中", "Halbfett":"中太", "Fett":"太字", "Hintergrund der gesamten Kachel transparent":"カードの背景を透明にする",
+  "Kachelbreite (3–12 Spalten)":"カードの幅（3～12列）", "Kachelhöhe (2–12 Zeilen)":"カードの高さ（2～12行）",
+  "Aufgabenfilter":"タスクフィルター", "Räume / Areas":"部屋 / エリア", "Keine Auswahl zeigt Aufgaben aus allen Räumen.":"未選択の場合、すべての部屋のタスクを表示します。",
+  "Noch keine Räume aus Aufgaben verfügbar.":"タスクに登録された部屋はまだありません。", "Aufgaben werden geladen …":"タスクを読み込んでいます…",
+  "Zuständige / Assignees":"担当者", "Keine Auswahl zeigt Aufgaben aller Personen.":"未選択の場合、すべての担当者のタスクを表示します。",
+  "Nicht zugewiesen":"未割り当て", "Kalendertermine":"カレンダーの予定", "Termine aus Home-Assistant-Kalendern anzeigen":"Home Assistantカレンダーの予定を表示",
+  "Kalender-Entity":"カレンダーエンティティ", "Anzeigename":"表示名", "HA-Symbol":"HAアイコン", "Externe Icon-ID / URL":"外部アイコンID / URL",
+  "calendar.familie":"calendar.family", "Familie":"家族", "ri:calendar-line oder /local/icon.png":"ri:calendar-line または /local/icon.png",
+  "Farbe":"色", "Kalender entfernen":"カレンダーを削除", "+ Kalender hinzufügen":"+ カレンダーを追加", "Symbol":"アイコン",
+  "Bedienung":"操作", "Erledigen vor dem Speichern bestätigen":"完了にする前に確認",
+  "Aufgaben löschen erlauben (Admin-Modus)":"タスクの削除を許可（管理者モード）",
+  "Wenn deaktiviert, können Aufgaben weiterhin erledigt, verschoben und bearbeitet werden. Nur die Löschfunktion wird in dieser Karte ausgeblendet.":"無効にしても、タスクの完了、移動、編集は引き続き可能です。このカードでは削除機能のみ非表示になります。"
+};
+
 function safeAccent(value) {
   const color = String(value || "").trim();
   return /^#[0-9a-f]{3,8}$/i.test(color) ? color : "var(--primary-color)";
@@ -1256,11 +1418,36 @@ class RemeysTaskboardCardEditor extends HTMLElement {
 
   set hass(value) {
     const firstConnection = !this._hass && value;
+    const previousLanguage = this._language();
     this._hass = value;
-    if (firstConnection && this._config) {
+    if ((firstConnection || previousLanguage !== this._language()) && this._config) {
       this._render();
-      this._loadAreas();
+      if (firstConnection) this._loadAreas();
     }
+  }
+
+  _language() {
+    const configured = String(this._config?.language || "auto").toLowerCase();
+    if (configured !== "auto") return configured;
+    return String(this._hass?.language || this._hass?.locale?.language || globalThis.navigator?.language || "en").slice(0, 2).toLowerCase();
+  }
+
+  _translateEditor() {
+    if (this._language() === "de") return;
+    const table = CARD_EDITOR_TEXT[this._language()] || CARD_EDITOR_TEXT.en;
+    const walker = document.createTreeWalker(this.shadowRoot, NodeFilter.SHOW_TEXT);
+    let node;
+    while ((node = walker.nextNode())) {
+      const source = node.nodeValue.trim();
+      if (!source || !table[source]) continue;
+      node.nodeValue = node.nodeValue.replace(source, table[source]);
+    }
+    this.shadowRoot.querySelectorAll("[label], [title], [placeholder]").forEach((element) => {
+      for (const attribute of ["label", "title", "placeholder"]) {
+        const source = element.getAttribute(attribute);
+        if (source && table[source]) element.setAttribute(attribute, table[source]);
+      }
+    });
   }
   setConfig(config) {
     const { max_tasks: _removedMaxTasks, ...supportedConfig } = config;
@@ -1363,6 +1550,8 @@ class RemeysTaskboardCardEditor extends HTMLElement {
       <section class="config-section"><div class="section-title">Bedienung</div><ha-formfield label="Erledigen vor dem Speichern bestätigen"><ha-checkbox data-field="confirm_done" ${this._config.confirm_done !== false ? "checked" : ""}></ha-checkbox></ha-formfield><ha-formfield label="Aufgaben löschen erlauben (Admin-Modus)"><ha-checkbox data-field="allow_delete" ${this._config.allow_delete !== false ? "checked" : ""}></ha-checkbox></ha-formfield><div class="hint">Wenn deaktiviert, können Aufgaben weiterhin erledigt, verschoben und bearbeitet werden. Nur die Löschfunktion wird in dieser Karte ausgeblendet.</div></section>
     </div>`;
 
+    this._translateEditor();
+
     this.shadowRoot.querySelectorAll("ha-input[data-field]").forEach((input) => {
       input.addEventListener("change", () => {
         const field = input.dataset.field;
@@ -1398,7 +1587,7 @@ class RemeysTaskboardCardEditor extends HTMLElement {
       picker.hass = this._hass;
       picker.selector = { icon: {} };
       picker.value = calendarSources[index]?.icon || "";
-      picker.label = "Symbol";
+      picker.label = this._language() === "de" ? "Symbol" : (CARD_EDITOR_TEXT[this._language()] || CARD_EDITOR_TEXT.en).Symbol;
       picker.addEventListener("value-changed", (event) => {
         const icon = selectedIcon(event);
         if (icon === null) return;
