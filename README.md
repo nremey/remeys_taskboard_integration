@@ -1,5 +1,13 @@
 it is bug hunting season
 
+
+> [!IMPORTANT]
+> This project was heavenly developed with the assistance of AI, including parts of the
+> code, documentation and translations. Although the results have been tested
+> and reviewed where possible, they may still contain errors or inaccurate
+> wording. Please report any problems you find.
+
+
 <p align="center">
   <img src="assets/remeys-taskboard-logo.svg" width="180" height="180" alt="Remey's Taskboard logo">
 </p>
