@@ -21,6 +21,51 @@ function safeEventColor(value) {
   return /^#[0-9a-f]{6}$/i.test(color) ? color : "var(--rtb-accent)";
 }
 
+function normalizeEntityText(value) {
+  const normalized = String(value ?? "").trim().toLowerCase();
+  if (normalized === "on" || normalized === "true") return "true";
+  if (normalized === "off" || normalized === "false") return "false";
+  return normalized;
+}
+
+function entityRuleIntervals(op, value) {
+  switch (op) {
+    case "<": return [[-Infinity, value, false, false]];
+    case "<=": return [[-Infinity, value, false, true]];
+    case ">": return [[value, Infinity, false, false]];
+    case ">=": return [[value, Infinity, true, false]];
+    case "==": return [[value, value, true, true]];
+    case "!=": return [[-Infinity, value, false, false], [value, Infinity, false, false]];
+    default: return [];
+  }
+}
+
+function entityRulesOverlap(connector) {
+  const due = connector?.due_rule;
+  const done = connector?.done_rule;
+  if (!due || !done) return false;
+  if ((connector.type || "number") !== "number") {
+    const left = normalizeEntityText(due.value);
+    const right = normalizeEntityText(done.value);
+    if (!["==", "!="].includes(due.op) || !["==", "!="].includes(done.op)) return false;
+    if (due.op === "==" && done.op === "==") return left === right;
+    if (due.op === "!=" && done.op === "!=") return true;
+    return left !== right;
+  }
+  const dueValue = Number(due.value);
+  const doneValue = Number(done.value);
+  if (!Number.isFinite(dueValue) || !Number.isFinite(doneValue)) return false;
+  return entityRuleIntervals(due.op, dueValue).some((a) => entityRuleIntervals(done.op, doneValue).some((b) => {
+    const low = Math.max(a[0], b[0]);
+    const high = Math.min(a[1], b[1]);
+    if (low < high) return true;
+    if (low !== high) return false;
+    const aInclusive = low === a[0] ? a[2] : a[3];
+    const bInclusive = low === b[0] ? b[2] : b[3];
+    return aInclusive && bInclusive;
+  }));
+}
+
 function safeIcon(value) {
   const icon = String(value || "").trim();
   if (/^[a-z0-9_-]+:[a-z0-9_-]+$/i.test(icon)) return icon;
@@ -318,8 +363,46 @@ class RemeysTaskboardCard extends HTMLElement {
     };
   }
 
+  _validateEntityConnector(form, connector) {
+    if (!connector?.enabled) return true;
+    const entityInput = form.elements.entity_id;
+    const dueValueInput = form.elements.entity_due_value;
+    const doneValueInput = form.elements.entity_done_value;
+    [entityInput, dueValueInput, doneValueInput].forEach((input) => input?.setCustomValidity(""));
+    if (!connector.entity_id) {
+      entityInput?.setCustomValidity(this._language() === "de" ? "Bei aktiviertem EntityConnector ist eine Entity ID erforderlich." : "An entity ID is required when EntityConnector is enabled.");
+      entityInput?.reportValidity();
+      return false;
+    }
+    if ((connector.type || "number") === "number") {
+      if (!Number.isFinite(Number(connector.due_rule?.value))) {
+        dueValueInput?.setCustomValidity(this._language() === "de" ? "Bitte einen gültigen Zahlenwert eingeben." : "Enter a valid numeric value.");
+        dueValueInput?.reportValidity();
+        return false;
+      }
+      if (!Number.isFinite(Number(connector.done_rule?.value))) {
+        doneValueInput?.setCustomValidity(this._language() === "de" ? "Bitte einen gültigen Zahlenwert eingeben." : "Enter a valid numeric value.");
+        doneValueInput?.reportValidity();
+        return false;
+      }
+    }
+    if (entityRulesOverlap(connector)) {
+      doneValueInput?.setCustomValidity(this._language() === "de"
+        ? "Die Regeln für „Fällig“ und „Erledigt“ überschneiden sich. Bitte die Operatoren oder Werte ändern."
+        : "The Due and Done rules overlap. Change their operators or values.");
+      doneValueInput?.reportValidity();
+      return false;
+    }
+    return true;
+  }
+
   _bindTaskForm(form) {
     if (!form) return;
+    form.querySelectorAll('[name^="entity_"]').forEach((input) => {
+      const clearValidation = () => input.setCustomValidity?.("");
+      input.addEventListener("input", clearValidation);
+      input.addEventListener("change", clearValidation);
+    });
     form.querySelector(".cancel")?.addEventListener("click", () => form.closest("dialog")?.close());
     form.querySelectorAll("[data-fill]").forEach((button) => button.addEventListener("click", () => {
       const input = form.elements[button.dataset.fill];
@@ -432,6 +515,7 @@ class RemeysTaskboardCard extends HTMLElement {
     const targetId = form.dataset.taskId || "";
     const patch = this._formValues(form);
     if (!targetId || !patch.Area || !patch.Task) return;
+    if (!this._validateEntityConnector(form, patch.EntityConnector)) return;
     const submit = form.querySelector('[type="submit"]');
     if (submit) submit.disabled = true;
     try {
@@ -446,6 +530,7 @@ class RemeysTaskboardCard extends HTMLElement {
 
   async _saveNewTask(form) {
     const values = this._formValues(form);
+    if (!this._validateEntityConnector(form, values.EntityConnector)) return;
     const last = values["Last done [Date]"];
     const task = {
       uid: `card-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`,
@@ -525,15 +610,23 @@ class RemeysTaskboardCard extends HTMLElement {
     if (this._config?.period_mode === "week") {
       const monday = new Date(today);
       const distance = this._config?.week_start === "sunday" ? today.getDay() : (today.getDay() + 6) % 7;
-      monday.setDate(today.getDate() - distance);
+      monday.setDate(today.getDate() - distance + this._calendarOffset * 7);
       return Array.from({ length: 7 }, (_, index) => {
         const value = new Date(monday); value.setDate(monday.getDate() + index); return value;
       });
     }
     const count = Math.max(1, Math.min(7, Number(this._config?.days) || 7));
+    const first = new Date(today);
+    first.setDate(today.getDate() + this._calendarOffset * count);
     return Array.from({ length: count }, (_, index) => {
-      const value = new Date(today); value.setDate(today.getDate() + index); return value;
+      const value = new Date(first); value.setDate(first.getDate() + index); return value;
     });
+  }
+
+  _columnTitle() {
+    const dates = this._columnDates();
+    const first = dates[0], last = dates[dates.length - 1];
+    return `${first.toLocaleDateString(this._locale(), { day: "2-digit", month: "2-digit" })} – ${last.toLocaleDateString(this._locale(), { day: "2-digit", month: "2-digit", year: "numeric" })}`;
   }
 
   _columnData() {
@@ -740,14 +833,16 @@ class RemeysTaskboardCard extends HTMLElement {
   _entityFunctionStatus(task) {
     const connector = task?.EntityConnector;
     if (!connector?.enabled || !connector.entity_id) return "off";
-    const state = this._hass?.states?.[connector.entity_id]?.state;
-    if (state === undefined || ["unknown", "unavailable", "none", "null", ""].includes(String(state).trim().toLowerCase())) return "bad";
+    const entity = this._hass?.states?.[connector.entity_id];
+    if (!entity) return "missing";
+    const state = entity.state;
+    if (["unknown", "unavailable", "not_available", "undefined", "none", "null", ""].includes(String(state ?? "").trim().toLowerCase())) return "bad";
     const numeric = (connector.type || "number") === "number";
-    const left = numeric ? Number(state) : String(state).trim().toLowerCase();
+    const left = numeric ? Number(state) : normalizeEntityText(state);
     if (numeric && !Number.isFinite(left)) return "bad";
     const matches = (rule) => {
       if (!rule) return false;
-      const right = numeric ? Number(rule.value) : String(rule.value ?? "").trim().toLowerCase();
+      const right = numeric ? Number(rule.value) : normalizeEntityText(rule.value);
       if (numeric && !Number.isFinite(right)) return false;
       switch (rule.op) {
         case "<": return left < right;
@@ -774,6 +869,9 @@ class RemeysTaskboardCard extends HTMLElement {
     const assignees = taskAssignees(task);
     const hasNotes = Boolean(String(task.Notes || "").trim());
     const entityStatus = this._entityFunctionStatus(task);
+    const entityNotice = entityStatus === "missing"
+      ? (this._language() === "de" ? "Sensor fehlt" : "Entity missing")
+      : entityStatus === "bad" ? (this._language() === "de" ? "Sensorstatus ungültig" : "Invalid entity state") : "";
     const icon = safeIcon(task.Icon);
     const progressStyle = ["ring", "bar"].includes(this._config.progress_style) ? this._config.progress_style : "none";
     const progress = !column && progressStyle !== "none" ? this._progressMetrics(task) : null;
@@ -784,7 +882,7 @@ class RemeysTaskboardCard extends HTMLElement {
     const rhythmUnit = unit === "m" ? this._text("months") : unit === "w" ? this._text("weeks") : this._text("days");
     const details = column
       ? `<div class="details"><div class="name">${escapeHtml(task.Task || "Unbenannte Aufgabe")}</div>${showArea ? `<div class="area">${escapeHtml(area)}</div>` : ""}${showOverdueAge && dueDays !== null && dueDays < 0 ? `<div class="overdue-age">${escapeHtml(this._text("overdueSince", Math.abs(dueDays)))}</div>` : ""}</div>`
-      : `<div class="details"><div class="name">${escapeHtml(task.Task || "Unbenannte Aufgabe")}</div><div class="task-meta">${showArea ? `<span><ha-icon icon="mdi:map-marker-outline"></ha-icon>${escapeHtml(area)}</span>` : ""}${assignees.map((assignee) => `<span><ha-icon icon="mdi:account-outline"></ha-icon>${escapeHtml(assignee)}</span>`).join("")}<span><ha-icon icon="mdi:repeat"></ha-icon>${escapeHtml(String(task.Rhythmen ?? 0))} ${escapeHtml(rhythmUnit)}</span>${entityStatus === "done" ? `<span class="entity-function done"><ha-icon icon="mdi:function-variant"></ha-icon>${this._language() === "de" ? "Erledigt (Funktion)" : "Done (function)"}</span>` : entityStatus === "due" ? `<span class="entity-function due-function"><ha-icon icon="mdi:function-variant"></ha-icon>${this._language() === "de" ? "Fällig (Funktion)" : "Due (function)"}</span>` : ""}</div>${progressBar}</div>`;
+      : `<div class="details"><div class="name">${escapeHtml(task.Task || "Unbenannte Aufgabe")}</div><div class="task-meta">${showArea ? `<span><ha-icon icon="mdi:map-marker-outline"></ha-icon>${escapeHtml(area)}</span>` : ""}${assignees.map((assignee) => `<span><ha-icon icon="mdi:account-outline"></ha-icon>${escapeHtml(assignee)}</span>`).join("")}<span><ha-icon icon="mdi:repeat"></ha-icon>${escapeHtml(String(task.Rhythmen ?? 0))} ${escapeHtml(rhythmUnit)}</span>${entityStatus === "done" ? `<span class="entity-function done"><ha-icon icon="mdi:function-variant"></ha-icon>${this._language() === "de" ? "Erledigt (Funktion)" : "Done (function)"}</span>` : entityStatus === "due" ? `<span class="entity-function due-function"><ha-icon icon="mdi:function-variant"></ha-icon>${this._language() === "de" ? "Fällig (Funktion)" : "Due (function)"}</span>` : entityNotice ? `<span class="entity-function problem"><ha-icon icon="mdi:alert-circle-outline"></ha-icon>${escapeHtml(entityNotice)}</span>` : ""}</div>${progressBar}</div>`;
     return `<div class="task ${column ? "column-task" : ""} ${overdue ? "overdue" : ""} entity-${entityStatus} ${this._busyTask ? "disabled" : ""}" data-task-id="${escapeHtml(taskId)}" draggable="${column ? "true" : "false"}" role="button" tabindex="0" title="${escapeHtml(this._text(column ? "moveComplete" : "complete"))}">
       ${column ? "" : `<span class="status-accent ${status}"></span>`}${!column || icon ? `<span class="task-icon ${progress && progressStyle === "ring" ? "progress-ring" : ""}" ${progress && progressStyle === "ring" ? `style="--progress-pct:${progress.cycle.toFixed(2)}%;--progress-color:${progress.color}" title="${escapeHtml(progress.title)}"` : ""}><span class="task-icon-inner">${icon ? iconMarkup(icon) : ""}</span></span>` : ""}${details}
       ${column ? "" : this._config.list_sort === "last_done" ? `<div class="due last-done">${escapeHtml(this._lastDoneLabel(task))}</div>` : `<div class="due ${status}">${escapeHtml(this._dueLabel(task))}</div>`}<span class="task-buttons">${hasNotes ? `<button class="notes-task task-action" draggable="false" title="${escapeHtml(this._text("notes"))}"><ha-icon icon="mdi:paperclip"></ha-icon></button>` : ""}<button class="edit-task task-action" draggable="false" title="${escapeHtml(this._text("edit"))}"><ha-icon icon="mdi:pencil-outline"></ha-icon></button></span></div>`;
@@ -964,8 +1062,8 @@ class RemeysTaskboardCard extends HTMLElement {
     const columnMode = this._config.view_mode === "columns";
     const calendarMode = ["calendar_weeks", "calendar_month"].includes(this._config.view_mode);
     const familyMode = this._config.view_mode === "family_calendar";
-    const calendarHeading = calendarMode && !this._loading && !this._error
-      ? `<div class="calendar-period"><button class="period-prev" title="Zurück"><ha-icon icon="mdi:chevron-left"></ha-icon></button><span>${escapeHtml(this._calendarTitle())}</span><button class="period-next" title="Weiter"><ha-icon icon="mdi:chevron-right"></ha-icon></button></div>`
+    const calendarHeading = (columnMode || calendarMode) && !this._loading && !this._error
+      ? `<div class="calendar-period"><button class="period-prev" title="Zurück"><ha-icon icon="mdi:chevron-left"></ha-icon></button><button class="period-today" title="Heute"><ha-icon icon="mdi:calendar-today"></ha-icon></button><span>${escapeHtml(columnMode ? this._columnTitle() : this._calendarTitle())}</span><button class="period-next" title="Weiter"><ha-icon icon="mdi:chevron-right"></ha-icon></button></div>`
       : "";
     let body = this._loading
       ? `<div class="state">${escapeHtml(this._text("loading"))}</div>`
@@ -1037,11 +1135,11 @@ class RemeysTaskboardCard extends HTMLElement {
       dialog::backdrop{background:#0008}.dialog-head{display:flex;align-items:center;gap:8px;padding:16px;font-size:1.15rem;font-weight:600}.dialog-head button{margin-left:auto;border:0;background:none;color:inherit;cursor:pointer}.dialog-head>ha-icon{color:var(--rtb-accent)}.note-content{margin:0 16px 18px;padding:14px;border:1px solid var(--divider-color);border-radius:10px;background:var(--secondary-background-color);white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.5}
       form{display:grid;gap:12px;padding:0 16px 16px}.field{display:grid;gap:4px;font-size:.85rem}.field input,.field select,.field textarea{box-sizing:border-box;width:100%;padding:9px;border:1px solid var(--divider-color);border-radius:6px;background:var(--card-background-color);color:var(--primary-text-color)}
       .form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.actions{display:flex;justify-content:flex-end;gap:8px}.actions button{padding:8px 14px;border-radius:6px;border:0;cursor:pointer}.actions button:disabled{opacity:.55;cursor:wait}.delete-task{margin-right:auto;background:color-mix(in srgb,var(--error-color) 14%,transparent);color:var(--error-color);border:1px solid color-mix(in srgb,var(--error-color) 35%,transparent)!important}.delete-task:hover{background:color-mix(in srgb,var(--error-color) 22%,transparent)}.primary{background:var(--primary-color);color:var(--text-primary-color)}
-      .known{display:flex;align-items:center;gap:5px;overflow:auto;font-size:.73rem;color:var(--secondary-text-color);padding-bottom:2px}.known span{white-space:nowrap}.known button,.mask-pills button{border:1px solid var(--divider-color);border-radius:999px;background:var(--secondary-background-color);color:var(--primary-text-color);padding:4px 8px;white-space:nowrap;cursor:pointer}.assignee-options button{display:inline-flex;align-items:center;gap:6px}.assignee-options .person-avatar{width:22px;height:22px;min-width:22px;font-size:.56rem}.icon-picker{width:100%}.known button.selected,.mask-pills button.selected{background:var(--primary-color);color:var(--text-primary-color);border-color:var(--primary-color)}.mask-group{display:grid;gap:7px}.mask-group>div:first-child{display:flex;justify-content:space-between;gap:8px}.mask-group small{color:var(--secondary-text-color)}.mask-pills{display:flex;flex-wrap:wrap;gap:6px}.mask-pills.months button{min-width:43px}.task-uid{padding:2px 1px;color:var(--secondary-text-color);font:500 .7rem ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.entity-connector{border:1px solid var(--divider-color);border-radius:10px;padding:9px}.entity-connector summary{display:flex;align-items:center;justify-content:space-between;cursor:pointer;font-weight:600}.entity-connector summary label{display:flex;align-items:center;gap:5px}.entity-fields{display:grid;grid-template-columns:1fr 1fr;gap:9px;padding-top:10px}.entity-rule{grid-column:1/-1;display:grid;grid-template-columns:minmax(95px,1fr) 85px 1fr;gap:7px;align-items:center}.entity-rule select,.entity-rule input{box-sizing:border-box;width:100%;padding:8px;border:1px solid var(--divider-color);border-radius:6px;background:var(--card-background-color);color:var(--primary-text-color)}.entity-function.done{color:var(--success-color,#43a047);font-weight:700}.entity-function.due-function{color:var(--warning-color,#d98200);font-weight:700}.task.entity-done{border-color:color-mix(in srgb,var(--success-color,#43a047) 45%,var(--rtb-task-border))}.task.entity-due{border-color:color-mix(in srgb,var(--warning-color,#d98200) 45%,var(--rtb-task-border))}.history{padding:0 16px 18px}.history ol{margin:8px 0 0;padding:0;list-style:none;border-top:1px solid var(--divider-color)}.history li{display:flex;justify-content:space-between;padding:7px 3px;border-bottom:1px solid var(--divider-color)}.history li small,.history-empty{color:var(--secondary-text-color)}.history-empty{padding-top:8px}.heatmap{max-width:100%;overflow:auto;margin-top:10px;padding:8px;border:1px solid var(--divider-color);border-radius:9px;background:var(--secondary-background-color)}.heatmap table{border-collapse:separate;border-spacing:1px;min-width:max-content}.heatmap th,.heatmap td{padding:0}.heatmap thead th{font-size:.62rem;font-weight:500;text-align:center;color:var(--secondary-text-color);padding-bottom:3px}.heatmap tbody th{font-size:.61rem;font-weight:500;text-align:right;color:var(--secondary-text-color);padding-right:5px}.heat-cell{display:block;width:9px;height:9px;border-radius:2px;border:1px solid color-mix(in srgb,var(--divider-color) 80%,transparent)}.heat-cell.month-even{background:color-mix(in srgb,var(--ha-card-background,var(--card-background-color)) 94%,var(--secondary-background-color))}.heat-cell.month-odd{background:color-mix(in srgb,var(--ha-card-background,var(--card-background-color)) 91%,var(--rtb-accent))}.heat-cell.done{background:var(--rtb-accent);border-color:var(--rtb-accent)}.heat-cell.outside{opacity:.24}.heat-legend{display:flex;align-items:center;justify-content:flex-end;gap:5px;margin-top:5px;font-size:.65rem;color:var(--secondary-text-color)}.heat-legend span{width:9px;height:9px;border-radius:2px;border:1px solid var(--divider-color);background:var(--ha-card-background,var(--card-background-color))}.heat-legend span.done{background:var(--rtb-accent);border-color:var(--rtb-accent)}@media(max-width:600px){.form-row,.entity-fields{grid-template-columns:1fr}.entity-rule{grid-template-columns:1fr}.mask-group>div:first-child{display:grid}}
+      .known{display:flex;align-items:center;gap:5px;overflow:auto;font-size:.73rem;color:var(--secondary-text-color);padding-bottom:2px}.known span{white-space:nowrap}.known button,.mask-pills button{border:1px solid var(--divider-color);border-radius:999px;background:var(--secondary-background-color);color:var(--primary-text-color);padding:4px 8px;white-space:nowrap;cursor:pointer}.assignee-options button{display:inline-flex;align-items:center;gap:6px}.assignee-options .person-avatar{width:22px;height:22px;min-width:22px;font-size:.56rem}.icon-picker{width:100%}.known button.selected,.mask-pills button.selected{background:var(--primary-color);color:var(--text-primary-color);border-color:var(--primary-color)}.mask-group{display:grid;gap:7px}.mask-group>div:first-child{display:flex;justify-content:space-between;gap:8px}.mask-group small{color:var(--secondary-text-color)}.mask-pills{display:flex;flex-wrap:wrap;gap:6px}.mask-pills.months button{min-width:43px}.task-uid{padding:2px 1px;color:var(--secondary-text-color);font:500 .7rem ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.entity-connector{border:1px solid var(--divider-color);border-radius:10px;padding:9px}.entity-connector summary{display:flex;align-items:center;justify-content:space-between;cursor:pointer;font-weight:600}.entity-connector summary label{display:flex;align-items:center;gap:5px}.entity-fields{display:grid;grid-template-columns:1fr 1fr;gap:9px;padding-top:10px}.entity-rule{grid-column:1/-1;display:grid;grid-template-columns:minmax(95px,1fr) 85px 1fr;gap:7px;align-items:center}.entity-rule select,.entity-rule input{box-sizing:border-box;width:100%;padding:8px;border:1px solid var(--divider-color);border-radius:6px;background:var(--card-background-color);color:var(--primary-text-color)}.entity-function.done{color:var(--success-color,#43a047);font-weight:700}.entity-function.due-function{color:var(--warning-color,#d98200);font-weight:700}.entity-function.problem{color:var(--error-color,#db4437);font-weight:700}.task.entity-done{border-color:color-mix(in srgb,var(--success-color,#43a047) 45%,var(--rtb-task-border))}.task.entity-due{border-color:color-mix(in srgb,var(--warning-color,#d98200) 45%,var(--rtb-task-border))}.task.entity-missing,.task.entity-bad{border-color:color-mix(in srgb,var(--error-color,#db4437) 60%,var(--rtb-task-border));border-style:dashed}.history{padding:0 16px 18px}.history ol{margin:8px 0 0;padding:0;list-style:none;border-top:1px solid var(--divider-color)}.history li{display:flex;justify-content:space-between;padding:7px 3px;border-bottom:1px solid var(--divider-color)}.history li small,.history-empty{color:var(--secondary-text-color)}.history-empty{padding-top:8px}.heatmap{max-width:100%;overflow:auto;margin-top:10px;padding:8px;border:1px solid var(--divider-color);border-radius:9px;background:var(--secondary-background-color)}.heatmap table{border-collapse:separate;border-spacing:1px;min-width:max-content}.heatmap th,.heatmap td{padding:0}.heatmap thead th{font-size:.62rem;font-weight:500;text-align:center;color:var(--secondary-text-color);padding-bottom:3px}.heatmap tbody th{font-size:.61rem;font-weight:500;text-align:right;color:var(--secondary-text-color);padding-right:5px}.heat-cell{display:block;width:9px;height:9px;border-radius:2px;border:1px solid color-mix(in srgb,var(--divider-color) 80%,transparent)}.heat-cell.month-even{background:color-mix(in srgb,var(--ha-card-background,var(--card-background-color)) 94%,var(--secondary-background-color))}.heat-cell.month-odd{background:color-mix(in srgb,var(--ha-card-background,var(--card-background-color)) 91%,var(--rtb-accent))}.heat-cell.done{background:var(--rtb-accent);border-color:var(--rtb-accent)}.heat-cell.outside{opacity:.24}.heat-legend{display:flex;align-items:center;justify-content:flex-end;gap:5px;margin-top:5px;font-size:.65rem;color:var(--secondary-text-color)}.heat-legend span{width:9px;height:9px;border-radius:2px;border:1px solid var(--divider-color);background:var(--ha-card-background,var(--card-background-color))}.heat-legend span.done{background:var(--rtb-accent);border-color:var(--rtb-accent)}@media(max-width:600px){.form-row,.entity-fields{grid-template-columns:1fr}.entity-rule{grid-template-columns:1fr}.mask-group>div:first-child{display:grid}}
       .task-meta span,.progress-value{font-size:calc(.67rem * var(--rtb-font-scale))}.area,.due{font-size:calc(.78rem * var(--rtb-font-scale))}.column-task .name{font-size:calc(.76rem * var(--rtb-font-scale))}.calendar-grid .column-task .name{font-size:calc(.71rem * var(--rtb-font-scale))}.calendar-grid .column-task .area{font-size:calc(.65rem * var(--rtb-font-scale))}.day-head,.weekday-heads,.overdue-head{font-size:calc(.78rem * var(--rtb-font-scale))}.calendar-day-number{font-size:calc(.75rem * var(--rtb-font-scale))}.calendar-event span{font-size:calc(.68rem * var(--rtb-font-scale))}.calendar-event small{font-size:calc(.63rem * var(--rtb-font-scale))}.family-head strong{font-size:calc(.78rem * var(--rtb-font-scale))}.family-all-day>span,.family-empty{font-size:calc(.67rem * var(--rtb-font-scale))}.family-timeline>aside span{font-size:calc(.63rem * var(--rtb-font-scale))}.family-entry{font-size:calc(.69rem * var(--rtb-font-scale))}.family-entry>small{font-size:calc(.62rem * var(--rtb-font-scale))}.family-entry>em{font-size:calc(.6rem * var(--rtb-font-scale))}.task-group h3{font-size:calc(${compact ? ".75rem" : ".82rem"} * var(--rtb-font-scale))}.overdue-age{font-size:calc(.68rem * var(--rtb-font-scale))}.dialog-head{font-size:calc(1.15rem * var(--rtb-font-scale))}.field{font-size:calc(.85rem * var(--rtb-font-scale))}.known{font-size:calc(.73rem * var(--rtb-font-scale))}.task-uid{font-size:calc(.7rem * var(--rtb-font-scale))}.history li,.note-content,.event-details{font-size:calc(1rem * var(--rtb-font-scale))}.name,.task-group h3,.day-head,.weekday-heads,.overdue-head,.family-head strong,.dialog-head{font-weight:var(--rtb-font-weight-strong)}button,input,select,textarea{font-family:inherit;font-weight:inherit}
       ha-card.transparent-background{background:transparent;box-shadow:none}.transparent-background .header{background:transparent}.transparent-background .task,.transparent-background .column-task,.transparent-background .day,.transparent-background .day-head,.transparent-background .weekday-heads,.transparent-background .calendar-day,.transparent-background .family-head,.transparent-background .family-timeline>aside,.transparent-background .family-time-column,.transparent-background .overdue-column,.transparent-background .overdue-head{background-color:transparent;background-image:none}.transparent-background .calendar-day.weekend{background:color-mix(in srgb,var(--secondary-background-color) 20%,transparent)}
     </style><ha-card class="${this._config.transparent_background === true ? "transparent-background" : ""}"><div class="header">${iconMarkup(this._config.icon || "mdi:clipboard-check-outline")}
-      ${escapeHtml(this._config.title || this._text("tasks"))}<button class="add" title="${escapeHtml(this._text("add"))}"><ha-icon icon="mdi:plus"></ha-icon></button></div>${body}</ha-card>
+      ${escapeHtml(this._config.title || this._text("tasks"))}<button class="add" title="${escapeHtml(this._text("add"))}"><ha-icon icon="mdi:checkbox-marked-circle-plus-outline"></ha-icon></button></div>${body}</ha-card>
       <dialog class="add-dialog"><div class="dialog-head">${escapeHtml(this._text("add"))}<button class="dialog-close" title="${escapeHtml(this._text("close"))}"><ha-icon icon="mdi:close"></ha-icon></button></div>${this._taskFormMarkup()}</dialog><dialog class="edit-dialog"></dialog><dialog class="event-dialog"></dialog><dialog class="notes-dialog"></dialog>`;
     this.shadowRoot.querySelector(".add")?.addEventListener("click", () => this._openAddDialog());
     this.shadowRoot.querySelectorAll("img.external-icon").forEach((image) => {
@@ -1116,8 +1214,8 @@ class RemeysTaskboardCard extends HTMLElement {
     this.shadowRoot.querySelectorAll("dialog").forEach((dialog) => dialog.addEventListener("close", () => {
       if (this._renderPending) setTimeout(() => this._render(), 0);
     }));
-    this.shadowRoot.querySelector(".period-prev")?.addEventListener("click", () => { this._calendarOffset -= familyMode || this._config.view_mode === "calendar_month" ? 1 : Math.max(2, Number(this._config.weeks_count) || 3); this._render(); this._loadCalendarEvents(); });
-    this.shadowRoot.querySelector(".period-next")?.addEventListener("click", () => { this._calendarOffset += familyMode || this._config.view_mode === "calendar_month" ? 1 : Math.max(2, Number(this._config.weeks_count) || 3); this._render(); this._loadCalendarEvents(); });
+    this.shadowRoot.querySelector(".period-prev")?.addEventListener("click", () => { this._calendarOffset -= familyMode || columnMode || this._config.view_mode === "calendar_month" ? 1 : Math.max(2, Number(this._config.weeks_count) || 3); this._render(); this._loadCalendarEvents(); });
+    this.shadowRoot.querySelector(".period-next")?.addEventListener("click", () => { this._calendarOffset += familyMode || columnMode || this._config.view_mode === "calendar_month" ? 1 : Math.max(2, Number(this._config.weeks_count) || 3); this._render(); this._loadCalendarEvents(); });
     this.shadowRoot.querySelector(".period-today")?.addEventListener("click", () => { this._calendarOffset = 0; this._render(); this._loadCalendarEvents(); });
     const familyScroll = this.shadowRoot.querySelector(".family-scroll");
     familyScroll?.addEventListener("wheel", (event) => {
