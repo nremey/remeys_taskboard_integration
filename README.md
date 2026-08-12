@@ -54,6 +54,17 @@ perform a full browser refresh before reopening the dashboard card picker.
 > [the screenshot guide](assets/screenshots/README.md) for filenames and capture
 > recommendations.
 
+
+<img width="1033" height="917" alt="Visual card editor - options" src="https://github.com/user-attachments/assets/35234d3c-2f2c-4b24-a347-43c61f66186b" />
+<img width="1033" height="917" alt="Visual card editor - filters" src="https://github.com/user-attachments/assets/18de4d2f-922f-4075-a2ba-6f188808f6cb" />
+
+<img width="1081" height="755" alt="Task list view" src="https://github.com/user-attachments/assets/c76f8845-8926-4794-919e-7084cdb7c00b" />
+<img width="1620" height="843" alt="Weekly task view" src="https://github.com/user-attachments/assets/c1c931de-c142-449c-bf6b-acfef509e734" />
+<img width="1620" height="843" alt="Monthly calendar view" src="https://github.com/user-attachments/assets/5b914e96-ac2f-4c06-ad62-02c732d075f1" />
+<img width="1620" height="843" alt="Family Calendar view" src="https://github.com/user-attachments/assets/92df0860-adb1-4f41-a176-47f7fd03d8f9" />
+<img width="742" height="873" alt="New Task editor dialog" src="https://github.com/user-attachments/assets/b1c27baa-9e36-4a7b-8549-c8f524742c34" />
+
+
 | View | What the screenshot should demonstrate | Planned file |
 | --- | --- | --- |
 | Task list | Due dates, areas, assignees, icons and progress display | `task-list.png` |
@@ -63,23 +74,6 @@ perform a full browser refresh before reopening the dashboard card picker.
 | Task editor | Task details, recurrence, masks and EntityConnector | `task-editor.png` |
 | Card editor | Filters, layouts, appearance and admin-mode options | `card-editor.png` |
 
-<!--
-When the screenshots exist, replace the table above or add this gallery:
-
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/55620ea6-0cca-462c-9b35-ee7778dcfd33" width="48%" alt="Task list view">
-  
-  <img src="assets/screenshots/week-view.png" width="48%" alt="Weekly task view">
-</p>
-<p align="center">
-  <img src="assets/screenshots/month-view.png" width="48%" alt="Monthly calendar view">
-  <img src="https://github.com/user-attachments/assets/fd211d5e-6e99-49fa-afef-3326b6709bb1" width="48%" alt="Family Calendar view">
-</p>
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/ae7bfb83-d874-457f-a00d-2a2e9faaaf8a" width="48%" alt="Task editor dialog">
-  <img src="assets/screenshots/card-editor.png" width="48%" alt="Visual card editor">
-</p>
--->
 
 
 
