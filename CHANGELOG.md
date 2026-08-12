@@ -1,98 +1,148 @@
 # Changelog
 
+## 4.52.0
+
+- The task editor prevents overlapping Due and Done rules in the EntityConnector.
+- Missing entities and invalid states are detected separately and displayed
+  directly on the task.
+- Text states now normalize `on`/`true` and `off`/`false`, matching the previous
+  HTML version.
+
+## 4.51.0
+
+- The week/day view now has buttons for navigating to the previous and next
+  periods and returning to the current period.
+- Current-week mode navigates one week at a time; next-X-days mode shifts by the
+  configured number of days.
+- Calendar events are reloaded for the visible period when navigating.
+
+## 4.50.0
+
+- The create-task button now uses `mdi:checkbox-marked-circle-plus-outline`,
+  making it easier to distinguish from the plus button used to edit Home
+  Assistant dashboards.
+- Added screenshot placeholders and instructions for adding README screenshots
+  later.
+
+## 4.49.0
+
+- When returning to a dashboard, the reconnected card automatically reloads its
+  tasks.
+- If the Home Assistant API object is not fully available until later, the card
+  starts loading automatically instead of displaying a persistent API error.
+
+## 4.48.0
+
+- The dashboard card is registered at a stable resource URL without a version
+  parameter.
+- The integration path is served without cache headers, so the manual resource
+  does not need to be updated after future HACS updates.
+
+## 4.47.0
+
+- An empty task list is no longer displayed indefinitely as an active loading
+  operation in the card editor.
+- The editor now distinguishes between loading, successfully loaded empty data,
+  and API errors. New tasks can still be created using the plus button.
+
+## 4.46.0
+
+- The blocking live preview in the dashboard card picker has been disabled.
+- The card and visual editor now start task API requests only after Home
+  Assistant has provided them with the `hass` object.
+
 ## 4.45.0
 
-- Die Integration stellt die Dashboard-Karte nun über einen eigenen statischen
-  Pfad bereit und registriert sie automatisch als Frontend-Modul.
-- Nach Installation und Neustart erscheint Remey's Taskboard ohne manuelles
-  Anlegen einer Lovelace-Ressource im Kartenpicker.
+- The integration now serves the dashboard card from its own static path and
+  automatically registers it as a frontend module.
+- After installation and restart, Remey's Taskboard appears in the card picker
+  without requiring a Lovelace resource to be created manually.
 
 ## 4.44.0
 
-- Im visuellen Karteneditor kann das Löschen von Aufgaben pro Karte deaktiviert
-  werden. Erledigen, Verschieben und Bearbeiten bleiben dabei verfügbar.
-- Der Löschbutton wird bei deaktivierter Option nicht gerendert; die Kartenlogik
-  verwirft zusätzlich direkte Löschversuche.
+- Task deletion can be disabled per card in the visual card editor. Completing,
+  moving, and editing tasks remain available.
+- When the option is disabled, the delete button is not rendered and the card
+  logic also rejects direct deletion attempts.
 
 ## 4.43.0
 
-- Der Taskboard-Webhook wurde entfernt. Dashboard-Karten lesen und ändern
-  Aufgaben jetzt ausschließlich über die authentifizierte Integrations-API.
-- Native Home-Assistant-Aktionen für Hinzufügen, Bearbeiten, Löschen und
-  Erledigen von Aufgaben ergänzt.
-- Namen, Beschreibungen und Felder dieser Aktionen auf Deutsch, Englisch,
-  Französisch, Spanisch, Niederländisch und Japanisch ergänzt.
+- Removed the Taskboard webhook. Dashboard cards now read and modify tasks
+  exclusively through the authenticated integration API.
+- Added native Home Assistant actions for adding, editing, deleting, and
+  completing tasks.
+- Added German, English, French, Spanish, Dutch, and Japanese translations for
+  the names, descriptions, and fields of these actions.
 
 ## 4.42.0
 
-- Der Karteneditor bietet theme-kompatible Schriftarten sowie fünf globale
-  Schriftstärken von leicht bis fett für alle Ansichten und Dialoge.
-- GitHub-fertige README, Release Notes, Repository-Logo, Issue-/PR-Vorlagen und
-  eine automatische Validierungs-Action ergänzt.
+- The card editor provides theme-compatible fonts and five global font weights,
+  ranging from light to bold, for all views and dialogs.
+- Added a GitHub-ready README, release notes, repository logo, issue and pull
+  request templates, and an automated validation action.
 
 ## 4.41.0
 
-- Ein gemeinsamer Schriftgrößenfaktor von 70 bis 180 Prozent skaliert die Texte
-  aller Kartenansichten, ohne die konfigurierte Kachelgröße zu verändern.
+- A shared font-size scale from 70% to 180% scales the text in all card views
+  without changing the configured card size.
 
 ## 4.40.0
 
-- Listenaufgaben besitzen immer einen gleich großen Symbolplatz. Ohne Icon oder
-  bei einer nicht ladbaren Bildquelle bleibt dieser als leerer Platzhalter stehen.
+- Tasks in list view always have a consistently sized icon area. When no icon is
+  set or an image source cannot be loaded, it remains as an empty placeholder.
 
 ## 4.39.0
 
-- Die Listenansicht kann Aufgaben zuerst nach Area gruppieren und zeigt für jede
-  Area eine Zwischenüberschrift; die gewählte Fälligkeits- oder Verlaufssortierung
-  bleibt innerhalb jeder Gruppe erhalten.
+- List view can group tasks by area first and displays a subheading for each
+  area; the selected due-date or history sorting is preserved within each group.
 
 ## 4.38.0
 
-- Das Laden und Speichern der Aufgaben funktioniert auch in Dashboard-Kontexten,
-  in denen `hass.callApi` beim Start nicht verfügbar ist.
-- Der lokale Integrations-Webhook unterstützt nun `list_tasks` als Fallback und
-  liest dabei ebenfalls ausschließlich aus dem nativen Home-Assistant-Store.
-- Der irreführende Startfehler „Home-Assistant-API ist nicht verfügbar“ entfällt.
+- Loading and saving tasks now also works in dashboard contexts where
+  `hass.callApi` is unavailable at startup.
+- The local integration webhook now supports `list_tasks` as a fallback and also
+  reads exclusively from the native Home Assistant store.
+- Removed the misleading startup error "Home Assistant API is unavailable."
 
 ## 4.37.0
 
-- Im Karteneditor kann der Hintergrund der gesamten Kachel transparent gestellt
-  werden. Die Option wirkt in Listen-, Wochen-, Monats- und Family-Calendar-Ansicht.
+- The background of the entire card can be made transparent in the card editor.
+  This option applies to the list, week, month, and Family Calendar views.
 
 ## 4.36.0
 
-- Der Fortschrittsring der Listenansicht wird auch bei Aufgaben ohne gewähltes
-  Icon angezeigt; seine Mitte bleibt in diesem Fall bewusst leer.
+- The progress ring in list view is also displayed for tasks without a selected
+  icon; its center intentionally remains empty in this case.
 
 ## 4.35.0
 
-- Aufgaben werden nativ im Home-Assistant-Integrationsspeicher
-  `.storage/remeys_taskboard.tasks` gespeichert.
-- Beim ersten Start wird eine vorhandene alte `userdata/tasklist.js` automatisch
-  importiert; fehlt sie, wird ein leerer Aufgabenspeicher angelegt.
-- Dashboard-Karten lesen und schreiben Aufgaben über eine authentifizierte API
-  der Integration statt über den früheren HTML-Dateipfad.
-- Die alte Tasklist-Datei diente in dieser Version noch als synchronisierte
-  Kompatibilitätskopie für die damalige HTML-Oberfläche.
+- Tasks are stored natively in the Home Assistant integration store at
+  `.storage/remeys_taskboard.tasks`.
+- On first startup, an existing legacy `userdata/tasklist.js` file is imported
+  automatically; if it is missing, an empty task store is created.
+- Dashboard cards read and write tasks through an authenticated integration API
+  instead of the previous HTML file path.
+- In this version, the legacy task-list file was retained as a synchronized
+  compatibility copy for the HTML interface available at the time.
 
 ## 4.34.0
 
-- Die Jahres-Heatmap der Aufgabenhistorie verwendet wie die ursprüngliche
-  HTML-Ansicht alternierende Hintergrundfarben für gerade und ungerade Monate.
+- Like the original HTML view, the annual task-history heatmap uses alternating
+  background colors for even and odd months.
 
 ## 4.33.0
 
-- Der visuelle Dashboard-Karteneditor ist in Grundansicht, ansichtsspezifische
-  Optionen, Darstellung, Aufgabenfilter, Kalendertermine und Bedienung gegliedert.
-- Optionen werden nur noch angezeigt, wenn sie in der gewählten Ansicht wirken.
-- Abhängige Felder, etwa Zeitraum der Verlaufsliste, Überfällig-Position und
-  Kalenderquellen, erscheinen erst nach Auswahl der zugehörigen Funktion.
+- The visual dashboard card editor is organized into general, view-specific,
+  appearance, task-filter, calendar-event, and interaction settings.
+- Options are now shown only when they apply to the selected view.
+- Dependent fields, such as the history-list period, overdue position, and
+  calendar sources, appear only after the corresponding feature is enabled.
 
 ## 4.32.0
 
-- Neue Aufgaben lassen sich direkt aus einer Kalenderzelle per Rechtsklick,
-  Doppelklick oder Doppeltippen öffnen; das Zell-Datum wird als nächste
-  Fälligkeit in den Aufgaben-Editor übernommen.
+- New tasks can be opened directly from a calendar cell by right-clicking,
+  double-clicking, or double-tapping; the cell date is prefilled as the next due
+  date in the task editor.
 
 ## 4.31.0
 
