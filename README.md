@@ -48,31 +48,14 @@ perform a full browser refresh before reopening the dashboard card picker.
 
 ## Screenshots
 
-> [!NOTE]
-> Screenshot placeholders are listed below. Replace each placeholder with the
-> matching image in `assets/screenshots/` when screenshots are available. See
-> [the screenshot guide](assets/screenshots/README.md) for filenames and capture
-> recommendations.
-
-
-<img width="1033" height="917" alt="Visual card editor - options" src="https://github.com/user-attachments/assets/35234d3c-2f2c-4b24-a347-43c61f66186b" />
+<img width="1033" height="917" alt="Visual card editor - appearance, layouts" src="https://github.com/user-attachments/assets/35234d3c-2f2c-4b24-a347-43c61f66186b" />
 <img width="1033" height="917" alt="Visual card editor - filters" src="https://github.com/user-attachments/assets/18de4d2f-922f-4075-a2ba-6f188808f6cb" />
 
-<img width="1081" height="755" alt="Task list view" src="https://github.com/user-attachments/assets/c76f8845-8926-4794-919e-7084cdb7c00b" />
-<img width="1620" height="843" alt="Weekly task view" src="https://github.com/user-attachments/assets/c1c931de-c142-449c-bf6b-acfef509e734" />
-<img width="1620" height="843" alt="Monthly calendar view" src="https://github.com/user-attachments/assets/5b914e96-ac2f-4c06-ad62-02c732d075f1" />
-<img width="1620" height="843" alt="Family Calendar view" src="https://github.com/user-attachments/assets/92df0860-adb1-4f41-a176-47f7fd03d8f9" />
-<img width="742" height="873" alt="New Task editor dialog" src="https://github.com/user-attachments/assets/b1c27baa-9e36-4a7b-8549-c8f524742c34" />
-
-
-| View | What the screenshot should demonstrate | Planned file |
-| --- | --- | --- |
-| Task list | Due dates, areas, assignees, icons and progress display | `task-list.png` |
-| Week view | Tasks arranged by weekday and drag-and-drop rescheduling | `week-view.png` |
-| Month view | Navigable month grid with tasks and calendar events | `month-view.png` |
-| Family Calendar | Daily timeline grouped by assignee | `family-calendar.png` |
-| Task editor | Task details, recurrence, masks and EntityConnector | `task-editor.png` |
-| Card editor | Filters, layouts, appearance and admin-mode options | `card-editor.png` |
+<img width="1081" height="755" alt="Task list view : Due dates, areas, assignees, icons and progress display "  src="https://github.com/user-attachments/assets/c76f8845-8926-4794-919e-7084cdb7c00b" />
+<img width="1620" height="843" alt="Weekly task view : Tasks arranged by weekday and drag-and-drop rescheduling" src="https://github.com/user-attachments/assets/c1c931de-c142-449c-bf6b-acfef509e734" />
+<img width="1620" height="843" alt="Monthly calendar view : Navigable month grid with tasks and calendar events " src="https://github.com/user-attachments/assets/5b914e96-ac2f-4c06-ad62-02c732d075f1" />
+<img width="1620" height="843" alt="Family Calendar view : Daily timeline grouped by assignee" src="https://github.com/user-attachments/assets/92df0860-adb1-4f41-a176-47f7fd03d8f9" />
+<img width="742" height="873" alt="New Task editor dialog : Task details, recurrence, masks and EntityConnector" src="https://github.com/user-attachments/assets/b1c27baa-9e36-4a7b-8549-c8f524742c34" />
 
 
 
