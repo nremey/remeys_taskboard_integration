@@ -1,5 +1,12 @@
 # Release notes
 
+## 4.45.0 – GitHub release
+
+The integration now serves and registers its dashboard card automatically.
+After installation and a Home Assistant restart, Remey's Taskboard appears in
+the dashboard card picker without manually adding a Lovelace resource. Perform
+a full browser refresh after upgrading to replace a previously cached module.
+
 ## 4.44.0 – GitHub release
 
 The visual card editor now includes a per-card admin-mode option for task

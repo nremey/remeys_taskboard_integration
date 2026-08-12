@@ -1,5 +1,12 @@
 # Changelog
 
+## 4.45.0
+
+- Die Integration stellt die Dashboard-Karte nun über einen eigenen statischen
+  Pfad bereit und registriert sie automatisch als Frontend-Modul.
+- Nach Installation und Neustart erscheint Remey's Taskboard ohne manuelles
+  Anlegen einer Lovelace-Ressource im Kartenpicker.
+
 ## 4.44.0
 
 - Im visuellen Karteneditor kann das Löschen von Aufgaben pro Karte deaktiviert

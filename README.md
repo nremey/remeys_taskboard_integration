@@ -1,13 +1,10 @@
-WARNING! NOT READY - DO NOT USE YET
-
-
 <p align="center">
   <img src="assets/remeys-taskboard-logo.svg" width="180" height="180" alt="Remey's Taskboard logo">
 </p>
 
 # Remey's Taskboard – Home Assistant Integration
 
-![Version](https://img.shields.io/badge/version-4.44.0-3d68d8)
+![Version](https://img.shields.io/badge/version-4.45.0-3d68d8)
 ![Home Assistant](https://img.shields.io/badge/Home%20Assistant-2025.7%2B-41bdf5)
 ![HACS](https://img.shields.io/badge/HACS-Custom-57c7b6)
 ![License](https://img.shields.io/badge/license-MIT-green)
@@ -17,7 +14,7 @@ installed from the Integrations UI and used as a native dashboard card. No
 standalone dashboard, manual `/config/www` deployment, YAML package, or
 long-lived access token is required.
 
-**Current release:** `4.44.0` · [Release notes](RELEASE_NOTES.md) ·
+**Current release:** `4.45.0` · [Release notes](RELEASE_NOTES.md) ·
 [Complete changelog](CHANGELOG.md)
 
 ## Installation
@@ -99,16 +96,11 @@ weekday/month masks. Every operation is broadcast to all open taskboard cards.
 
 ## Dashboard cards
 
-The integration includes the custom card `remeys-taskboard-card.js`. Register
-it once in **Settings → Dashboards → Resources**:
-
-```text
-URL:  /local/community/remeys_taskboard/remeys-taskboard-card.js?v=4.44.0
-Type: JavaScript module
-```
-
-After refreshing the browser, add **Remey's Taskboard** from the dashboard card
-picker. Its visual editor provides these settings independently for every card:
+The integration serves and registers `remeys-taskboard-card.js` automatically.
+After installing or updating the integration, restart Home Assistant and perform
+a full browser refresh. **Remey's Taskboard** then appears in the dashboard card
+picker without a manually configured dashboard resource. Its visual editor
+provides these settings independently for every card:
 
 The visual editor groups its controls by purpose. View-specific controls are
 only shown for the selected list, week/day, multi-week, month or Family Calendar
@@ -376,8 +368,13 @@ removing its configuration volume. Do not edit `.storage` files manually.
 1. Update the complete integration directory through HACS or copy the complete
    `custom_components/remeys_taskboard` directory manually.
 2. Restart Home Assistant whenever Python/backend files changed.
-3. Update the version query in the dashboard resource URL to the installed
-   version and perform a full browser reload.
+3. Perform a full browser reload. The integration automatically registers the
+   cache-busted dashboard module URL for the installed version.
+
+If you manually registered `/local/community/remeys_taskboard/remeys-taskboard-card.js`
+for an older release, you may remove that entry from **Settings → Dashboards →
+Resources** after installing 4.45.0. Duplicate loading is handled safely during
+the transition.
 
 Updating only `remeys-taskboard-card.js` is not sufficient for releases that
 also contain storage, API or migration changes. Read [RELEASE_NOTES.md](RELEASE_NOTES.md)
@@ -406,7 +403,7 @@ python3 -m json.tool hacs.json
 For a release, create a semantic version tag matching the `version` in
 `manifest.json`.
 
-Suggested GitHub release title: `Remey's Taskboard 4.44.0`. Copy the matching
+Suggested GitHub release title: `Remey's Taskboard 4.45.0`. Copy the matching
 section from [RELEASE_NOTES.md](RELEASE_NOTES.md) into the release description
 and attach no generated runtime data or `.storage` files.
 
