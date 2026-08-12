@@ -32,7 +32,8 @@ installed from the Integrations UI and used as a native dashboard card.
 7. Add `/local/community/remeys_taskboard/remeys-taskboard-card.js` as a **JavaScript module**.
 8. Restart HomeAssistant, Perform a full browser refresh,
 9. edit a dashboard and select   **Remey's Taskboard** from **Add card**.
-10. Create a view and start with new tasks.
+10. Create a view and start with new task by clicking the symbol <img width="47" height="46" alt="grafik" src="https://github.com/user-attachments/assets/83ef8acf-67d6-435b-809c-b8979eb28db0" />
+in the above right corner of the dashboard. It opend the task editor.
 
 
 The card-URL remains unchanged for future HACS updates. Restart Home Assistant after integration updates and
