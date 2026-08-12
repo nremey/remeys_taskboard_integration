@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">Remey's Taskboard</title>
+  <desc id="desc">A rounded task board with calendar tabs and a check mark</desc>
+  <defs>
+    <linearGradient id="background" x1="72" y1="48" x2="440" y2="464" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#57C7B6"/>
+      <stop offset="1" stop-color="#3D68D8"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="116" fill="url(#background)"/>
+  <g>
+    <rect x="116" y="132" width="296" height="292" rx="48" fill="#17325F" opacity=".18"/>
+    <rect x="108" y="118" width="296" height="292" rx="48" fill="#F8FBFF"/>
+    <path d="M108 190h296" stroke="#DCE7F5" stroke-width="18"/>
+    <path d="M174 88v76M338 88v76" stroke="#F8FBFF" stroke-width="30" stroke-linecap="round"/>
+    <circle cx="174" cy="190" r="10" fill="#3D68D8"/>
+    <circle cx="256" cy="190" r="10" fill="#57C7B6"/>
+    <circle cx="338" cy="190" r="10" fill="#3D68D8"/>
+    <path d="m172 300 56 56 116-126" fill="none" stroke="#3565D5" stroke-width="34" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>
