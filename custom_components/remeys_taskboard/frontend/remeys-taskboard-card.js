@@ -151,6 +151,7 @@ class RemeysTaskboardCard extends HTMLElement {
   connectedCallback() {
     this._connected = true;
     this._subscribeTaskUpdates();
+    if (this._config && this._hass?.callApi) this._reload();
   }
 
   disconnectedCallback() {
@@ -168,18 +169,19 @@ class RemeysTaskboardCard extends HTMLElement {
     delete supportedConfig.show_progress_ring;
     this._config = { ...RemeysTaskboardCard.getStubConfig(), ...supportedConfig };
     this._render();
-    this._reload();
+    if (this._hass) this._reload();
   }
 
   set hass(value) {
     const firstConnection = !this._hass && value;
     const previous = this._hass;
+    const apiBecameAvailable = !previous?.callApi && Boolean(value?.callApi);
     const entityChanged = !firstConnection && this._tasks.some((task) => {
       const id = task?.EntityConnector?.enabled ? task.EntityConnector.entity_id : "";
       return id && previous?.states?.[id]?.state !== value?.states?.[id]?.state;
     });
     this._hass = value;
-    if (firstConnection && this._config) this._reload();
+    if ((firstConnection || apiBecameAvailable) && this._config) this._reload();
     if (entityChanged && this._config) this._render();
     if (value) this._subscribeTaskUpdates();
   }
@@ -244,6 +246,12 @@ class RemeysTaskboardCard extends HTMLElement {
   }
 
   async _reload() {
+    if (!this._hass?.callApi) {
+      this._loading = true;
+      this._error = "";
+      this._render();
+      return;
+    }
     if (this._externalReloadTimer) clearTimeout(this._externalReloadTimer);
     this._externalReloadTimer = null;
     this._loading = true;
@@ -1144,6 +1152,8 @@ class RemeysTaskboardCardEditor extends HTMLElement {
     this.attachShadow({ mode: "open" });
     this._areas = [];
     this._assignees = [];
+    this._tasksLoaded = false;
+    this._tasksLoadError = "";
   }
 
   set hass(value) {
@@ -1160,18 +1170,24 @@ class RemeysTaskboardCardEditor extends HTMLElement {
     delete supportedConfig.show_progress_ring;
     this._config = { ...RemeysTaskboardCard.getStubConfig(), ...supportedConfig };
     this._render();
-    this._loadAreas();
+    if (this._hass) this._loadAreas();
   }
 
   async _loadAreas() {
+    this._tasksLoaded = false;
+    this._tasksLoadError = "";
     try {
       const tasks = await loadTasks(this._hass);
       this._areas = [...new Set(tasks.map((task) => String(task.Area || "").trim()).filter(Boolean))]
         .sort((a, b) => a.localeCompare(b));
       this._assignees = [...new Set(tasks.flatMap((task) => taskAssignees(task)))]
         .sort((a, b) => a.localeCompare(b));
+    } catch (error) {
+      this._tasksLoadError = error?.message || String(error);
+    } finally {
+      this._tasksLoaded = true;
       this._renderWhenIconPickerIdle();
-    } catch (_) { /* Card shows the actionable loading error. */ }
+    }
   }
 
   _renderWhenIconPickerIdle() {
@@ -1235,7 +1251,7 @@ class RemeysTaskboardCardEditor extends HTMLElement {
       <div class="row"><ha-input data-field="card_width" type="number" min="3" max="12" label="Kachelbreite (3–12 Spalten)" value="${escapeHtml(this._config.card_width)}"></ha-input>
       <ha-input data-field="card_height" type="number" min="2" max="12" label="Kachelhöhe (2–12 Zeilen)" value="${escapeHtml(this._config.card_height)}"></ha-input></div></section>
       <section class="config-section"><div class="section-title">Aufgabenfilter</div><div><div class="label">Räume / Areas</div><div class="hint">Keine Auswahl zeigt Aufgaben aus allen Räumen.</div><div class="areas">
-        ${this._areas.length ? this._areas.map((area) => `<ha-formfield label="${escapeHtml(area)}"><ha-checkbox data-area="${escapeHtml(area)}" ${selectedAreas.has(area) ? "checked" : ""}></ha-checkbox></ha-formfield>`).join("") : "Aufgaben werden geladen …"}
+        ${this._tasksLoadError ? `<span class="hint">${escapeHtml(this._tasksLoadError)}</span>` : this._areas.length ? this._areas.map((area) => `<ha-formfield label="${escapeHtml(area)}"><ha-checkbox data-area="${escapeHtml(area)}" ${selectedAreas.has(area) ? "checked" : ""}></ha-checkbox></ha-formfield>`).join("") : this._tasksLoaded ? '<span class="hint">Noch keine Räume aus Aufgaben verfügbar.</span>' : "Aufgaben werden geladen …"}
       </div></div>
       <div><div class="label">Zuständige / Assignees</div><div class="hint">Keine Auswahl zeigt Aufgaben aller Personen.</div><div class="areas">
         ${availableAssignees.map((assignee) => `<div class="person-filter">${personAvatarMarkup(this._hass, assignee)}<ha-formfield label="${escapeHtml(assignee)}"><ha-checkbox data-assignee="${escapeHtml(assignee)}" ${selectedAssignees.has(assignee) ? "checked" : ""}></ha-checkbox></ha-formfield></div>`).join("")}
@@ -1333,6 +1349,6 @@ if (!window.customCards.some((card) => card.type === "remeys-taskboard-card")) {
     type: "remeys-taskboard-card",
     name: "Remey's Taskboard",
     description: "Aufgaben nach Räumen, Zuständigen und den nächsten X Tagen filtern",
-    preview: true,
+    preview: false,
   });
 }
