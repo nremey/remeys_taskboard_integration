@@ -13,13 +13,20 @@ from typing import Any
 from aiohttp import web
 import voluptuous as vol
 
-from homeassistant.components.http import HomeAssistantView
+from homeassistant.components.frontend import add_extra_js_url
+from homeassistant.components.http import HomeAssistantView, StaticPathConfig
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant, ServiceCall
 from homeassistant.exceptions import HomeAssistantError
 from homeassistant.helpers.storage import Store
 
-from .const import DOMAIN, FRONTEND_DIR, TASKS_UPDATED_EVENT
+from .const import (
+    DOMAIN,
+    FRONTEND_DIR,
+    FRONTEND_URL,
+    FRONTEND_VERSION,
+    TASKS_UPDATED_EVENT,
+)
 
 _RUNTIME_KEY = f"{DOMAIN}_loaded"
 _STORAGE_KEY = f"{DOMAIN}.tasks"
@@ -215,10 +222,15 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         return True
 
     source = Path(__file__).parent / "frontend"
+    frontend_file = source / "remeys-taskboard-card.js"
     destination = Path(hass.config.path("www", FRONTEND_DIR))
     legacy_task_path = destination / "userdata" / "tasklist.js"
     legacy_tasks_existed = legacy_task_path.exists()
     await hass.async_add_executor_job(_install_frontend, source, destination)
+    await hass.http.async_register_static_paths(
+        [StaticPathConfig(FRONTEND_URL, str(frontend_file), False)]
+    )
+    add_extra_js_url(hass, f"{FRONTEND_URL}?v={FRONTEND_VERSION}")
     task_lock = asyncio.Lock()
     task_store: Store = Store(hass, _STORAGE_VERSION, _STORAGE_KEY)
     stored = await task_store.async_load()
