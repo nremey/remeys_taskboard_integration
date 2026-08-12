@@ -13,24 +13,12 @@ The visual card editor now includes a per-card admin-mode option for task
 deletion. Disabling it hides and blocks deletion in that card while completion,
 drag-and-drop rescheduling and task editing remain available.
 
-After upgrading, use this dashboard resource URL:
-
-```text
-/local/community/remeys_taskboard/remeys-taskboard-card.js?v=4.44.0
-```
-
 ## 4.43.0 – GitHub release
 
 Task operations no longer use the local compatibility webhook. Dashboard cards
 now use the authenticated integration API exclusively. Automations and scripts
 can add, edit, delete and complete tasks through native, translated Home
 Assistant actions under `remeys_taskboard.*`.
-
-After upgrading, restart Home Assistant and update the dashboard resource URL:
-
-```text
-/local/community/remeys_taskboard/remeys-taskboard-card.js?v=4.43.0
-```
 
 ## 4.42.0 – GitHub release
 
@@ -56,12 +44,6 @@ integration and HACS custom repository.
 Install the complete `custom_components/remeys_taskboard` directory and restart
 Home Assistant. Updating only the dashboard JavaScript is not sufficient for
 the native storage/API changes introduced since 4.35.0.
-
-After upgrading, use this dashboard resource URL to bypass cached older files:
-
-```text
-/local/community/remeys_taskboard/remeys-taskboard-card.js?v=4.42.0
-```
 
 The first start imports an existing legacy task list only when the native store
 does not exist yet. Do not edit files inside `.storage` manually.
