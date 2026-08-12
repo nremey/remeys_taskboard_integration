@@ -1,4 +1,4 @@
-DO NOT USE THIS VERSION YET!  - its bug hunting season
+it is bug hunting season
 
 <p align="center">
   <img src="assets/remeys-taskboard-logo.svg" width="180" height="180" alt="Remey's Taskboard logo">
