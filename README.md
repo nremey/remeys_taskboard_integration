@@ -12,7 +12,8 @@ DO NOT USE THIS VERSION YET!  - its bug hunting season
 ![License](https://img.shields.io/badge/license-MIT-green)
 
 Remey's Taskboard is packaged as a Home Assistant custom integration. It is
-installed from the Integrations UI and used as a native dashboard card.
+downloaded through HACS, configured from the Integrations UI and used as a
+dashboard card.
 
 **Current release:** `4.52.0` · [Release notes](RELEASE_NOTES.md) ·
 [Complete changelog](CHANGELOG.md)
@@ -22,22 +23,36 @@ installed from the Integrations UI and used as a native dashboard card.
 ### HACS custom repository
 
 1. In HACS, open **Custom repositories** from the menu.
-2. Add `https://github.com/nremey/remeys_taskboard_integration` as category
-   **Integration**.
-3. Within the HACS Enviroment search woe Remeys taskboard.
-4. Install **Remey's Taskboard** and restart Home Assistant.
-4. Open **Settings → Devices & services → Add integration**.
-5. Search for **Remey's Taskboard** and confirm setup.
-6. Open **Settings → Dashboards → Resources** from the three-dot menu.
-7. Add `/local/community/remeys_taskboard/remeys-taskboard-card.js` as a **JavaScript module**.
-8. Restart HomeAssistant, Perform a full browser refresh,
-9. edit a dashboard and select   **Remey's Taskboard** from **Add card**.
-10. Create a view and start with new task by clicking the symbol <img width="47" height="46" alt="grafik" src="https://github.com/user-attachments/assets/83ef8acf-67d6-435b-809c-b8979eb28db0" />
-in the above right corner of the dashboard. It opend the task editor.
+2. Add `https://github.com/nremey/remeys_taskboard_integration` and select
+   **Integration** as the repository type.
+3. Search for **Remey's Taskboard** in HACS.
+4. Select **Remey's Taskboard**, choose **Download** and wait for the installation
+   to finish.
+5. Open **Settings → Dashboards**. From the three-dot menu, select
+   **Resources**.
+6. Select **Add resource** and enter this URL:
 
+   ```text
+   /local/community/remeys_taskboard/remeys-taskboard-card.js
+   ```
 
-The card-URL remains unchanged for future HACS updates. Restart Home Assistant after integration updates and
-perform a full browser refresh before reopening the dashboard card picker.
+7. Select **JavaScript module** as the resource type and save it. The resource
+   may be temporarily unavailable until Home Assistant has restarted and the
+   integration has been set up.
+8. Restart Home Assistant
+9. Open **Settings → Devices & services → Add integration**.
+10. Search for **Remey's Taskboard** and complete the setup.
+11. Perform a full browser refresh.
+12. Edit a dashboard, select **Add card**, and choose
+    **Remey's Taskboard**.
+13. Configure the card and save the dashboard/panel.
+14. To create your first task, click the new-task button in the upper-right
+    corner of the Taskboard card:
+
+    <img width="47" height="46" alt="New-task button" src="https://github.com/user-attachments/assets/83ef8acf-67d6-435b-809c-b8979eb28db0">
+
+    This opens the task editor.
+
 
 ## What the integration does
 
@@ -151,6 +166,11 @@ view; dependent controls appear only when their parent option is enabled.
 - configurable Monday or Sunday week start;
 - automatic language or explicit German, English, French, Spanish, Dutch and
   Japanese localization.
+
+> [!NOTE]
+> The Area and assignee filters are populated from existing tasks. On a new
+> installation, you may need to create tasks with the desired Areas and
+> assignees before those values become available in the dashboard card editor.
 
 You can therefore add several cards, for example one for the kitchen, one for
 the bathroom and one containing every task due within the next three days.
@@ -406,10 +426,10 @@ removing its configuration volume. Do not edit `.storage` files manually.
 3. Keep the stable dashboard resource URL unchanged and perform a full browser
    reload.
 
-If you manually registered `/local/community/remeys_taskboard/remeys-taskboard-card.js`
-for an older release, you may remove that entry from **Settings → Dashboards →
-Resources** after installing 4.51.0. Keep only
-`/remeys_taskboard/remeys-taskboard-card.js` to avoid duplicate loading.
+Keep `/local/community/remeys_taskboard/remeys-taskboard-card.js` registered as
+a **JavaScript module** under **Settings → Dashboards → Resources**. If the card
+does not appear after an update, verify that this resource still exists, restart
+Home Assistant and perform a full browser refresh.
 
 Updating only `remeys-taskboard-card.js` is not sufficient for releases that
 also contain storage, API or migration changes. Read [RELEASE_NOTES.md](RELEASE_NOTES.md)
