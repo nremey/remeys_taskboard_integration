@@ -67,18 +67,22 @@ perform a full browser refresh before reopening the dashboard card picker.
 When the screenshots exist, replace the table above or add this gallery:
 
 <p align="center">
-  <img src="assets/screenshots/task-list.png" width="48%" alt="Task list view">
+  <img src="https://github.com/user-attachments/assets/55620ea6-0cca-462c-9b35-ee7778dcfd33" width="48%" alt="Task list view">
+  
   <img src="assets/screenshots/week-view.png" width="48%" alt="Weekly task view">
 </p>
 <p align="center">
   <img src="assets/screenshots/month-view.png" width="48%" alt="Monthly calendar view">
-  <img src="assets/screenshots/family-calendar.png" width="48%" alt="Family Calendar view">
+  <img src="https://github.com/user-attachments/assets/fd211d5e-6e99-49fa-afef-3326b6709bb1" width="48%" alt="Family Calendar view">
 </p>
 <p align="center">
-  <img src="assets/screenshots/task-editor.png" width="48%" alt="Task editor dialog">
+  <img src="https://github.com/user-attachments/assets/ae7bfb83-d874-457f-a00d-2a2e9faaaf8a" width="48%" alt="Task editor dialog">
   <img src="assets/screenshots/card-editor.png" width="48%" alt="Visual card editor">
 </p>
 -->
+
+
+
 
 ## Native Home Assistant actions
 
