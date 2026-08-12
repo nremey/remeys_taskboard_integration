@@ -1,3 +1,6 @@
+
+DO NOT USE THIS CURRENT VERSION - online for testing only - i currently hunt annoying bugs  
+
 <p align="center">
   <img src="assets/remeys-taskboard-logo.svg" width="180" height="180" alt="Remey's Taskboard logo">
 </p>
