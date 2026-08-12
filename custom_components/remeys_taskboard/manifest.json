@@ -1,7 +1,7 @@
 {
   "domain": "remeys_taskboard",
   "name": "Remey's Taskboard",
-  "version": "4.45.0",
+  "version": "4.49.0",
   "documentation": "https://github.com/nremey/remeys_taskboard_integration",
   "issue_tracker": "https://github.com/nremey/remeys_taskboard_integration/issues",
   "config_flow": true,
