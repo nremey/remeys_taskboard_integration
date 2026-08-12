@@ -1325,12 +1325,14 @@ class RemeysTaskboardCardEditor extends HTMLElement {
   }
 }
 
-customElements.define("remeys-taskboard-card", RemeysTaskboardCard);
-customElements.define("remeys-taskboard-card-editor", RemeysTaskboardCardEditor);
+if (!customElements.get("remeys-taskboard-card")) customElements.define("remeys-taskboard-card", RemeysTaskboardCard);
+if (!customElements.get("remeys-taskboard-card-editor")) customElements.define("remeys-taskboard-card-editor", RemeysTaskboardCardEditor);
 window.customCards = window.customCards || [];
-window.customCards.push({
-  type: "remeys-taskboard-card",
-  name: "Remey's Taskboard",
-  description: "Aufgaben nach Räumen, Zuständigen und den nächsten X Tagen filtern",
-  preview: true,
-});
+if (!window.customCards.some((card) => card.type === "remeys-taskboard-card")) {
+  window.customCards.push({
+    type: "remeys-taskboard-card",
+    name: "Remey's Taskboard",
+    description: "Aufgaben nach Räumen, Zuständigen und den nächsten X Tagen filtern",
+    preview: true,
+  });
+}
