@@ -24,7 +24,6 @@ from .const import (
     DOMAIN,
     FRONTEND_DIR,
     FRONTEND_URL,
-    FRONTEND_VERSION,
     TASKS_UPDATED_EVENT,
 )
 
@@ -230,7 +229,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     await hass.http.async_register_static_paths(
         [StaticPathConfig(FRONTEND_URL, str(frontend_file), False)]
     )
-    add_extra_js_url(hass, f"{FRONTEND_URL}?v={FRONTEND_VERSION}")
+    add_extra_js_url(hass, FRONTEND_URL)
     task_lock = asyncio.Lock()
     task_store: Store = Store(hass, _STORAGE_VERSION, _STORAGE_KEY)
     stored = await task_store.async_load()
