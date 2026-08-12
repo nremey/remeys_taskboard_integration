@@ -1,0 +1,36 @@
+add_task:
+  fields:
+    task:
+      required: true
+      selector:
+        object:
+
+edit_task:
+  fields:
+    task_uid:
+      required: true
+      selector:
+        text:
+    patch:
+      required: true
+      selector:
+        object:
+
+delete_task:
+  fields:
+    task_uid:
+      required: true
+      selector:
+        text:
+
+mark_done:
+  fields:
+    task_uid:
+      required: true
+      selector:
+        text:
+    done_by:
+      required: false
+      example: Automation
+      selector:
+        text:
