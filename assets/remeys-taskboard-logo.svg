@@ -1,21 +1,209 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
-  <title id="title">Remey's Taskboard</title>
-  <desc id="desc">A rounded task board with calendar tabs and a check mark</desc>
-  <defs>
-    <linearGradient id="background" x1="72" y1="48" x2="440" y2="464" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#57C7B6"/>
-      <stop offset="1" stop-color="#3D68D8"/>
-    </linearGradient>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="180"
+   height="180"
+   viewBox="0 0 47.624998 47.624998"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4.3 (0d15f75042, 2025-12-25)"
+   sodipodi:docname="remeys-taskboard-logo.svg"
+   inkscape:export-filename="PyCharmMiscProject/HomeAssistant/remeys_taskboard_integration/custom_components/remeys_taskboard/brand/icon.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="4"
+     inkscape:cx="117.625"
+     inkscape:cy="96.625"
+     inkscape:window-width="1885"
+     inkscape:window-height="1011"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1">
+    <marker
+       style="overflow:visible"
+       id="RoundedArrow"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       inkscape:stockid="Rounded arrow"
+       markerWidth="0.6"
+       markerHeight="0.6"
+       viewBox="0 0 1 1"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         transform="scale(0.7)"
+         d="m -0.21114562,-4.1055728 6.42229122,3.21114561 a 1,1 90 0 1 0,1.78885438 L -0.21114562,4.1055728 A 1.236068,1.236068 31.717474 0 1 -2,3 v -6 a 1.236068,1.236068 148.28253 0 1 1.78885438,-1.1055728 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:none"
+         id="path8" />
+    </marker>
   </defs>
-  <rect width="512" height="512" rx="116" fill="url(#background)"/>
-  <g>
-    <rect x="116" y="132" width="296" height="292" rx="48" fill="#17325F" opacity=".18"/>
-    <rect x="108" y="118" width="296" height="292" rx="48" fill="#F8FBFF"/>
-    <path d="M108 190h296" stroke="#DCE7F5" stroke-width="18"/>
-    <path d="M174 88v76M338 88v76" stroke="#F8FBFF" stroke-width="30" stroke-linecap="round"/>
-    <circle cx="174" cy="190" r="10" fill="#3D68D8"/>
-    <circle cx="256" cy="190" r="10" fill="#57C7B6"/>
-    <circle cx="338" cy="190" r="10" fill="#3D68D8"/>
-    <path d="m172 300 56 56 116-126" fill="none" stroke="#3565D5" stroke-width="34" stroke-linecap="round" stroke-linejoin="round"/>
+  <g
+     inkscape:label="Ebene 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="fill:#d4d2e3;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.318;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-dashoffset:68.8282;stroke-opacity:1"
+       id="rect11"
+       width="47.625"
+       height="47.625"
+       x="0"
+       y="0"
+       ry="5.0856166"
+       inkscape:export-filename="PyCharmMiscProject/HomeAssistant/remeys_taskboard_integration/custom_components/remeys_taskboard/brand/icon@2x.png"
+       inkscape:export-xdpi="150"
+       inkscape:export-ydpi="150" />
+    <g
+       id="g8">
+      <path
+         id="path1"
+         style="fill:#ffffff;fill-rule:evenodd;stroke:#666ea0;stroke-width:1.718;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:5.15400016,5.15400016;stroke-dashoffset:15.8056005"
+         transform="rotate(172.09678)"
+         d="m -36.240346,-41.674268 c 0.162925,-0.299917 0.339926,-0.591079 0.530116,-0.872597 0.19019,-0.281519 0.39357,-0.553394 0.609252,-0.814741 0.215682,-0.261346 0.443666,-0.512163 0.683067,-0.751564 0.957603,-0.957604 2.097864,-1.732549 3.364036,-2.268095 1.266173,-0.535546 2.658258,-0.831691 4.119511,-0.831691 5.845013,0 10.583333,4.73832 10.583333,10.583333 0,5.845013 -4.73832,10.583333 -10.583333,10.583333 -5.845013,0 -10.583333,-4.73832 -10.583333,-10.583333 0,-1.461253 0.296145,-2.853338 0.831691,-4.119511"
+         sodipodi:nodetypes="cssssssssc" />
+      <g
+         id="g4"
+         style="fill:none;fill-opacity:1;stroke:#666ea0;stroke-opacity:1"
+         transform="translate(-2.6807096,1.3076646)">
+        <path
+           style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#666ea0;stroke-width:1.218;stroke-linecap:round;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+           d="m 34.395832,37.368587 v 4.485298"
+           id="path4-3" />
+        <path
+           style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#666ea0;stroke-width:1.218;stroke-linecap:round;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+           d="m 23.812499,31.270552 h 4.485298"
+           id="path4-3-6" />
+        <path
+           style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#666ea0;stroke-width:1.218;stroke-linecap:round;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+           d="m 34.39583,20.687219 v 4.485298"
+           id="path4" />
+        <path
+           style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#666ea0;stroke-width:1.218;stroke-linecap:round;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+           d="m 40.493867,31.270538 h 4.485298"
+           id="path4-3-6-2" />
+      </g>
+      <path
+         id="path1-1"
+         style="fill:none;fill-rule:evenodd;stroke:#666ea0;stroke-width:1.718;stroke-linecap:round;marker-end:url(#RoundedArrow);stroke-opacity:1"
+         d="m 22.939256,38.495459 c -0.38038,-0.563037 -0.708003,-1.164645 -0.975776,-1.797731 -0.267773,-0.633087 -0.475696,-1.297651 -0.616675,-1.9866 -0.14098,-0.68895 -0.215016,-1.402284 -0.215016,-2.132911 0,-5.845013 4.73832,-10.583333 10.583333,-10.583333 5.845013,0 10.583333,4.73832 10.583333,10.583333"
+         sodipodi:nodetypes="cssssc" />
+    </g>
+    <path
+       style="baseline-shift:baseline;display:inline;overflow:visible;fill:#0f0752;fill-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-dashoffset:18.2108;enable-background:accumulate;stop-color:#000000;stop-opacity:1;opacity:1;stroke:#fffefe;stroke-opacity:1;stroke-width:0.3;stroke-dasharray:none"
+       d="m 43.931641,20.40625 a 1.5,1.5 0 0 0 -2.107422,0.255859 L 31.585937,33.722656 29.412109,31.523437 a 1.5,1.5 0 0 0 -2.121093,-0.01172 1.5,1.5 0 0 0 -0.01172,2.121093 l 3.36914,3.410157 a 1.50015,1.50015 0 0 0 2.248047,-0.128907 L 44.185547,22.511719 A 1.5,1.5 0 0 0 43.931641,20.40625 Z"
+       id="path9" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.24928px;font-family:Purisa;-inkscape-font-specification:'Purisa, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;writing-mode:lr-tb;direction:ltr;text-anchor:middle;fill:#0f0752;fill-opacity:1;fill-rule:evenodd;stroke:#0f0752;stroke-width:0.532;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-dashoffset:68.8282;stroke-opacity:1"
+       x="23.923859"
+       y="7.8953557"
+       id="text9"
+       inkscape:export-filename="PyCharmMiscProject/HomeAssistant/remeys_taskboard_integration/custom_components/remeys_taskboard/brand/icon.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96"><tspan
+         sodipodi:role="line"
+         id="tspan9"
+         x="23.923859"
+         y="7.8953557"
+         style="stroke-width:0.532;stroke-dasharray:none">remeys </tspan><tspan
+         sodipodi:role="line"
+         id="tspan10"
+         x="23.923859"
+         y="18.206955"
+         style="stroke-width:0.532;stroke-dasharray:none">taskboard</tspan></text>
+    <g
+       id="g11"
+       transform="translate(-0.00771922,-0.43916601)">
+      <rect
+         style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#666ea0;stroke-width:0.150719;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-dashoffset:68.8282;stroke-opacity:1"
+         id="rect10"
+         width="3"
+         height="3"
+         x="2.6314235"
+         y="22.43405" />
+      <path
+         style="fill:#ffffff;fill-opacity:0;fill-rule:evenodd;stroke:#666ea0;stroke-width:0.318;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-dashoffset:68.8282;stroke-opacity:1"
+         d="M 6.2931293,25.3125 18.683238,25.434049"
+         id="path11" />
+    </g>
+    <g
+       id="g11-3"
+       transform="translate(-0.00771922,4.1025025)">
+      <rect
+         style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#666ea0;stroke-width:0.150719;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-dashoffset:68.8282;stroke-opacity:1"
+         id="rect10-4"
+         width="3"
+         height="3"
+         x="2.6314235"
+         y="22.43405" />
+      <path
+         style="fill:#ffffff;fill-opacity:0;fill-rule:evenodd;stroke:#666ea0;stroke-width:0.318;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-dashoffset:68.8282;stroke-opacity:1"
+         d="M 6.2931293,25.3125 18.683238,25.434049"
+         id="path11-6" />
+    </g>
+    <g
+       id="g11-7"
+       transform="translate(-0.00771922,8.644171)">
+      <rect
+         style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#666ea0;stroke-width:0.150719;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-dashoffset:68.8282;stroke-opacity:1"
+         id="rect10-2"
+         width="3"
+         height="3"
+         x="2.6314235"
+         y="22.43405" />
+      <path
+         style="fill:#ffffff;fill-opacity:0;fill-rule:evenodd;stroke:#666ea0;stroke-width:0.318;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-dashoffset:68.8282;stroke-opacity:1"
+         d="M 6.2931293,25.3125 18.683238,25.434049"
+         id="path11-2" />
+    </g>
+    <g
+       id="g11-2"
+       transform="translate(-0.00771922,13.185839)">
+      <rect
+         style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#666ea0;stroke-width:0.150719;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-dashoffset:68.8282;stroke-opacity:1"
+         id="rect10-47"
+         width="3"
+         height="3"
+         x="2.6314235"
+         y="22.43405" />
+      <path
+         style="fill:#ffffff;fill-opacity:0;fill-rule:evenodd;stroke:#666ea0;stroke-width:0.318;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-dashoffset:68.8282;stroke-opacity:1"
+         d="M 6.2931293,25.3125 18.683238,25.434049"
+         id="path11-8" />
+    </g>
+    <g
+       id="g11-23"
+       transform="translate(-0.00771922,17.727508)">
+      <rect
+         style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#666ea0;stroke-width:0.150719;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-dashoffset:68.8282;stroke-opacity:1"
+         id="rect10-7"
+         width="3"
+         height="3"
+         x="2.6314235"
+         y="22.43405" />
+      <path
+         style="fill:#ffffff;fill-opacity:0;fill-rule:evenodd;stroke:#666ea0;stroke-width:0.318;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-dashoffset:68.8282;stroke-opacity:1"
+         d="M 6.2931293,25.3125 18.683238,25.434049"
+         id="path11-25" />
+    </g>
   </g>
 </svg>
