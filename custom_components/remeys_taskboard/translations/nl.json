@@ -1,0 +1,20 @@
+{
+  "title": "Remey's Taskboard",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Remey's Taskboard instellen",
+        "description": "Stelt taakbeheer in voor de Remey's Taskboard-dashboardkaart."
+      }
+    },
+    "abort": {
+      "already_configured": "Het Taskboard is al ingesteld."
+    }
+  },
+  "services": {
+    "add_task": { "name": "Taak toevoegen", "description": "Voegt een taak toe aan Remey's Taskboard.", "fields": { "task": { "name": "Taakgegevens", "description": "Taakgegevens als toewijzing." } } },
+    "edit_task": { "name": "Taak bewerken", "description": "Werkt velden bij van een taak die door de UUID wordt aangeduid.", "fields": { "task_uid": { "name": "Taak-UUID", "description": "UUID van de taak die moet worden bijgewerkt." }, "patch": { "name": "Wijzigingen", "description": "Taakvelden en hun nieuwe waarden als toewijzing." } } },
+    "delete_task": { "name": "Taak verwijderen", "description": "Verwijdert permanent een taak die door de UUID wordt aangeduid.", "fields": { "task_uid": { "name": "Taak-UUID", "description": "UUID van de taak die moet worden verwijderd." } } },
+    "mark_done": { "name": "Taak als voltooid markeren", "description": "Markeert een taak als voltooid, registreert de geschiedenis en berekent de volgende vervaldatum.", "fields": { "task_uid": { "name": "Taak-UUID", "description": "UUID van de taak die als voltooid moet worden gemarkeerd." }, "done_by": { "name": "Voltooid door", "description": "Naam voor de voltooiingsgeschiedenis. De standaardwaarde is Automation." } } }
+  }
+}

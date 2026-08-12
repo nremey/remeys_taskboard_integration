@@ -1,0 +1,20 @@
+{
+  "title": "Remey's Taskboard",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Remey's Taskboard のセットアップ",
+        "description": "Remey's Taskboard ダッシュボードカードのタスク管理を設定します。"
+      }
+    },
+    "abort": {
+      "already_configured": "Taskboard はすでに設定されています。"
+    }
+  },
+  "services": {
+    "add_task": { "name": "タスクを追加", "description": "Remey's Taskboard にタスクを追加します。", "fields": { "task": { "name": "タスクデータ", "description": "マッピング形式のタスクデータです。" } } },
+    "edit_task": { "name": "タスクを編集", "description": "UUID で指定したタスクのフィールドを更新します。", "fields": { "task_uid": { "name": "タスク UUID", "description": "更新するタスクの UUID です。" }, "patch": { "name": "変更内容", "description": "タスクフィールドと新しい値のマッピングです。" } } },
+    "delete_task": { "name": "タスクを削除", "description": "UUID で指定したタスクを完全に削除します。", "fields": { "task_uid": { "name": "タスク UUID", "description": "削除するタスクの UUID です。" } } },
+    "mark_done": { "name": "タスクを完了にする", "description": "タスクを完了にし、履歴を記録して次の期限を計算します。", "fields": { "task_uid": { "name": "タスク UUID", "description": "完了にするタスクの UUID です。" }, "done_by": { "name": "完了者", "description": "完了履歴に記録する名前です。既定値は Automation です。" } } }
+  }
+}
