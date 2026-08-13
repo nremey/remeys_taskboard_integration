@@ -7,17 +7,17 @@ DO NOT USE THIS VERSION YET!  - its bug hunting season
 > wording. Please report any problems you find.
 
 <p align="center">
-  <img src="assets/remeys-taskboard-logo.svg" width="180" height="180" alt="Remey's Taskboard logo">
+  <img src="assets/remeys-taskboard-logo.svg" width="180" height="180" alt="Remeys Taskboard logo">
 </p>
 
-# Remey's Taskboard – Home Assistant Integration
+# Remeys Taskboard – Home Assistant Integration
 
 ![Version](https://img.shields.io/badge/version-4.53.0-3d68d8)
 ![Home Assistant](https://img.shields.io/badge/Home%20Assistant-2025.7%2B-41bdf5)
 ![HACS](https://img.shields.io/badge/HACS-Custom-57c7b6)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
-Remey's Taskboard is packaged as a Home Assistant custom integration. It is
+Remeys Taskboard is packaged as a Home Assistant custom integration. It is
 downloaded through HACS, configured from the Integrations UI and used as a
 dashboard card.
 
@@ -31,8 +31,8 @@ dashboard card.
 1. In HACS, open **Custom repositories** from the menu.
 2. Add `https://github.com/nremey/remeys_taskboard_integration` and select
    **Integration** as the repository type.
-3. Search for **Remey's Taskboard** in HACS.
-4. Select **Remey's Taskboard**, choose **Download** and wait for the installation
+3. Search for **Remeys Taskboard** in HACS.
+4. Select **Remeys Taskboard**, choose **Download** and wait for the installation
    to finish.
 5. Open **Settings → Dashboards**. From the three-dot menu, select
    **Resources**.
@@ -47,10 +47,10 @@ dashboard card.
    integration has been set up.
 8. Restart Home Assistant
 9. Open **Settings → Devices & services → Add integration**.
-10. Search for **Remey's Taskboard** and complete the setup.
+10. Search for **Remeys Taskboard** and complete the setup.
 11. Perform a full browser refresh.
 12. Edit a dashboard, select **Add card**, and choose
-    **Remey's Taskboard**.
+    **Remeys Taskboard**.
 13. Configure the card and save the dashboard/panel.
 14. To create your first task, click the new-task button in the upper-right
     corner of the Taskboard card:
@@ -139,7 +139,7 @@ weekday/month masks. Every operation is broadcast to all open taskboard cards.
 
 The integration serves `remeys-taskboard-card.js` from the stable resource URL
 configured during installation. After restarting Home Assistant and performing
-a full browser refresh, **Remey's Taskboard** appears in the dashboard card
+a full browser refresh, **Remeys Taskboard** appears in the dashboard card
 picker. Its visual editor provides these settings independently for every card:
 
 The visual editor groups its controls by purpose. View-specific controls are

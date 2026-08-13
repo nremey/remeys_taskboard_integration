@@ -22,20 +22,20 @@ If that URL is different, update these three values in
    `taskboard`.
 6. Confirm that the **HACS**, **Hassfest** and **Validate** workflows pass.
 
-## Publish release 4.45.0
+## Publish release 4.51.0
 
 Only create the release after all workflows pass:
 
-1. Create the tag `v4.45.0` from the default branch.
+1. Create the tag `v4.51.0` from the default branch.
 2. Create a GitHub release from that tag; a tag without a release is not enough.
-3. Use `Remey's Taskboard 4.45.0` as its title.
-4. Copy the `4.45.0` section from `RELEASE_NOTES.md` into the description.
+3. Use `Remeys Taskboard 4.51.0` as its title.
+4. Copy the `4.51.0` section from `RELEASE_NOTES.md` into the description.
 5. Do not attach a ZIP manually; HACS can use GitHub's generated source archive.
 
 ## Test as a custom repository
 
 In HACS, open the menu, choose **Custom repositories**, enter the GitHub URL,
-select **Integration**, and install it. Restart Home Assistant and add Remey's
+select **Integration**, and install it. Restart Home Assistant and add Remeys
 Taskboard from **Settings → Devices & services**.
 
 ## Submit to the searchable HACS catalog

@@ -11,6 +11,10 @@
   progress rings and bars, and overdue-column indicators.
 - Added editor translations for the new status-color controls in every
   supported language.
+- List-view day ranges now accept `all` or any negative number to show every
+  task regardless of due date, including all overdue tasks and tasks without a
+  due date. Zero still means today, and positive numbers include dates through
+  today plus the configured number of days.
 
 ## 4.52.0
 
@@ -67,7 +71,7 @@
 
 - The integration now serves the dashboard card from its own static path and
   automatically registers it as a frontend module.
-- After installation and restart, Remey's Taskboard appears in the card picker
+- After installation and restart, Remeys Taskboard appears in the card picker
   without requiring a Lovelace resource to be created manually.
 
 ## 4.44.0

@@ -14,6 +14,12 @@ are applied consistently across task accents, due labels, progress displays and
 overdue-column indicators. The new controls are translated into all supported
 editor languages.
 
+The list-view day range additionally accepts `all` or any negative number as
+an unlimited range. This shows all overdue tasks, tasks due arbitrarily far in
+the future and tasks without a due date. A value of zero continues to show
+today, while a positive value sets the upper limit to today plus that many
+days.
+
 ## 4.52.0 – GitHub release
 
 EntityConnector validation now rejects overlapping Due and Done rules. Missing
@@ -63,7 +69,7 @@ context. The added card itself remains fully interactive.
 ## 4.45.0 – GitHub release
 
 The integration now serves and registers its dashboard card automatically.
-After installation and a Home Assistant restart, Remey's Taskboard appears in
+After installation and a Home Assistant restart, Remeys Taskboard appears in
 the dashboard card picker without manually adding a Lovelace resource. Perform
 a full browser refresh after upgrading to replace a previously cached module.
 
@@ -94,7 +100,7 @@ After upgrading, restart Home Assistant and update the dashboard resource URL:
 
 ## 4.42.0 – GitHub release
 
-Remey's Taskboard is now prepared as a standalone Home Assistant custom
+Remeys Taskboard is now prepared as a standalone Home Assistant custom
 integration and HACS custom repository.
 
 ### Highlights
