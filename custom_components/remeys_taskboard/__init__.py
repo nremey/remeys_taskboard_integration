@@ -42,8 +42,6 @@ def _install_frontend(source: Path, destination: Path) -> None:
     (destination / "remeys-taskboard-card.js").write_bytes(
         (source / "remeys-taskboard-card.js").read_bytes()
     )
-
-
 def _parse_tasks(source: str) -> list[dict[str, Any]]:
     """Parse a legacy JavaScript-wrapped JSON task list."""
     match = _TASK_ASSIGNMENT.search(source)
