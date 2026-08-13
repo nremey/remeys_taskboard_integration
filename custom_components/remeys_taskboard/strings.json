@@ -1,10 +1,10 @@
 {
-  "title": "Remey's Taskboard",
+  "title": "Remeys Taskboard",
   "config": {
     "step": {
       "user": {
-        "title": "Set up Remey's Taskboard",
-        "description": "Sets up task management for the Remey's Taskboard dashboard card."
+        "title": "Set up Remeys Taskboard",
+        "description": "Sets up task management for the Remeys Taskboard dashboard card."
       }
     },
     "abort": {
@@ -14,7 +14,7 @@
   "services": {
     "add_task": {
       "name": "Add task",
-      "description": "Adds a task to Remey's Taskboard.",
+      "description": "Adds a task to Remeys Taskboard.",
       "fields": { "task": { "name": "Task data", "description": "Task data as a mapping." } }
     },
     "edit_task": {
