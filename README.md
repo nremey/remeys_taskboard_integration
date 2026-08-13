@@ -1,5 +1,4 @@
-it is bug hunting season
-
+DO NOT USE THIS VERSION YET!  - its bug hunting season
 
 > [!IMPORTANT]
 > This project was heavenly developed with the assistance of AI, including parts of the
@@ -7,14 +6,13 @@ it is bug hunting season
 > and reviewed where possible, they may still contain errors or inaccurate
 > wording. Please report any problems you find.
 
-
 <p align="center">
   <img src="assets/remeys-taskboard-logo.svg" width="180" height="180" alt="Remey's Taskboard logo">
 </p>
 
 # Remey's Taskboard – Home Assistant Integration
 
-![Version](https://img.shields.io/badge/version-4.52.0-3d68d8)
+![Version](https://img.shields.io/badge/version-4.53.0-3d68d8)
 ![Home Assistant](https://img.shields.io/badge/Home%20Assistant-2025.7%2B-41bdf5)
 ![HACS](https://img.shields.io/badge/HACS-Custom-57c7b6)
 ![License](https://img.shields.io/badge/license-MIT-green)
@@ -23,7 +21,7 @@ Remey's Taskboard is packaged as a Home Assistant custom integration. It is
 downloaded through HACS, configured from the Integrations UI and used as a
 dashboard card.
 
-**Current release:** `4.52.0` · [Release notes](RELEASE_NOTES.md) ·
+**Current release:** `4.53.0` · [Release notes](RELEASE_NOTES.md) ·
 [Complete changelog](CHANGELOG.md)
 
 ## Installation

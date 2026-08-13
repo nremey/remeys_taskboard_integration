@@ -1,5 +1,17 @@
 # Changelog
 
+## 4.53.0
+
+- Reworked list-view task cards into a responsive three-row layout: the task
+  name and progress bar use the full content width beside the icon, while task
+  metadata and the right-aligned due/actions block share only the middle row.
+- Added per-card color pickers for overdue, due-soon and not-due states, with
+  red, orange and green retained as defaults.
+- Custom status colors now apply consistently to due labels, task accents,
+  progress rings and bars, and overdue-column indicators.
+- Added editor translations for the new status-color controls in every
+  supported language.
+
 ## 4.52.0
 
 - The task editor prevents overlapping Due and Done rules in the EntityConnector.
