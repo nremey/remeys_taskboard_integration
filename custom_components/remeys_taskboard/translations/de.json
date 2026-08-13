@@ -1,10 +1,10 @@
 {
-  "title": "Remey's Taskboard",
+  "title": "Remeys Taskboard",
   "config": {
     "step": {
       "user": {
-        "title": "Remey's Taskboard einrichten",
-        "description": "Richtet die Aufgabenverwaltung für die Remey's-Taskboard-Dashboard-Karte ein."
+        "title": "Remeys Taskboard einrichten",
+        "description": "Richtet die Aufgabenverwaltung für die Remeys-Taskboard-Dashboard-Karte ein."
       }
     },
     "abort": {
@@ -12,7 +12,7 @@
     }
   },
   "services": {
-    "add_task": { "name": "Aufgabe hinzufügen", "description": "Fügt Remey's Taskboard eine Aufgabe hinzu.", "fields": { "task": { "name": "Aufgabendaten", "description": "Aufgabendaten als Zuordnung." } } },
+    "add_task": { "name": "Aufgabe hinzufügen", "description": "Fügt Remeys Taskboard eine Aufgabe hinzu.", "fields": { "task": { "name": "Aufgabendaten", "description": "Aufgabendaten als Zuordnung." } } },
     "edit_task": { "name": "Aufgabe bearbeiten", "description": "Aktualisiert Felder einer über ihre UUID bestimmten Aufgabe.", "fields": { "task_uid": { "name": "Aufgaben-UUID", "description": "UUID der zu ändernden Aufgabe." }, "patch": { "name": "Änderungen", "description": "Aufgabenfelder und ihre neuen Werte als Zuordnung." } } },
     "delete_task": { "name": "Aufgabe löschen", "description": "Löscht eine über ihre UUID bestimmte Aufgabe dauerhaft.", "fields": { "task_uid": { "name": "Aufgaben-UUID", "description": "UUID der zu löschenden Aufgabe." } } },
     "mark_done": { "name": "Aufgabe als erledigt markieren", "description": "Markiert eine Aufgabe als erledigt, speichert den Verlauf und berechnet den nächsten Fälligkeitstermin.", "fields": { "task_uid": { "name": "Aufgaben-UUID", "description": "UUID der als erledigt zu markierenden Aufgabe." }, "done_by": { "name": "Erledigt von", "description": "Name für den Erledigungsverlauf. Standardwert ist Automation." } } }

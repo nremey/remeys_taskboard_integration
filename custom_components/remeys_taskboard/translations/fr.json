@@ -1,10 +1,10 @@
 {
-  "title": "Remey's Taskboard",
+  "title": "Remeys Taskboard",
   "config": {
     "step": {
       "user": {
-        "title": "Configurer Remey's Taskboard",
-        "description": "Configure la gestion des tâches pour la carte de tableau de bord Remey's Taskboard."
+        "title": "Configurer Remeys Taskboard",
+        "description": "Configure la gestion des tâches pour la carte de tableau de bord Remeys Taskboard."
       }
     },
     "abort": {
@@ -12,7 +12,7 @@
     }
   },
   "services": {
-    "add_task": { "name": "Ajouter une tâche", "description": "Ajoute une tâche à Remey's Taskboard.", "fields": { "task": { "name": "Données de la tâche", "description": "Données de la tâche sous forme de correspondance." } } },
+    "add_task": { "name": "Ajouter une tâche", "description": "Ajoute une tâche à Remeys Taskboard.", "fields": { "task": { "name": "Données de la tâche", "description": "Données de la tâche sous forme de correspondance." } } },
     "edit_task": { "name": "Modifier une tâche", "description": "Met à jour les champs d'une tâche identifiée par son UUID.", "fields": { "task_uid": { "name": "UUID de la tâche", "description": "UUID de la tâche à modifier." }, "patch": { "name": "Modifications", "description": "Champs de la tâche et leurs nouvelles valeurs sous forme de correspondance." } } },
     "delete_task": { "name": "Supprimer une tâche", "description": "Supprime définitivement une tâche identifiée par son UUID.", "fields": { "task_uid": { "name": "UUID de la tâche", "description": "UUID de la tâche à supprimer." } } },
     "mark_done": { "name": "Marquer la tâche comme terminée", "description": "Marque une tâche comme terminée, enregistre son historique et calcule sa prochaine échéance.", "fields": { "task_uid": { "name": "UUID de la tâche", "description": "UUID de la tâche à marquer comme terminée." }, "done_by": { "name": "Terminée par", "description": "Nom enregistré dans l'historique. La valeur par défaut est Automation." } } }

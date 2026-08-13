@@ -1,10 +1,10 @@
 {
-  "title": "Remey's Taskboard",
+  "title": "Remeys Taskboard",
   "config": {
     "step": {
       "user": {
-        "title": "Configurar Remey's Taskboard",
-        "description": "Configura la gestión de tareas para la tarjeta de panel Remey's Taskboard."
+        "title": "Configurar Remeys Taskboard",
+        "description": "Configura la gestión de tareas para la tarjeta de panel Remeys Taskboard."
       }
     },
     "abort": {
@@ -12,7 +12,7 @@
     }
   },
   "services": {
-    "add_task": { "name": "Añadir tarea", "description": "Añade una tarea a Remey's Taskboard.", "fields": { "task": { "name": "Datos de la tarea", "description": "Datos de la tarea como asignación." } } },
+    "add_task": { "name": "Añadir tarea", "description": "Añade una tarea a Remeys Taskboard.", "fields": { "task": { "name": "Datos de la tarea", "description": "Datos de la tarea como asignación." } } },
     "edit_task": { "name": "Editar tarea", "description": "Actualiza los campos de una tarea identificada por su UUID.", "fields": { "task_uid": { "name": "UUID de la tarea", "description": "UUID de la tarea que se actualizará." }, "patch": { "name": "Cambios", "description": "Campos de la tarea y sus nuevos valores como asignación." } } },
     "delete_task": { "name": "Eliminar tarea", "description": "Elimina permanentemente una tarea identificada por su UUID.", "fields": { "task_uid": { "name": "UUID de la tarea", "description": "UUID de la tarea que se eliminará." } } },
     "mark_done": { "name": "Marcar tarea como completada", "description": "Marca una tarea como completada, registra su historial y calcula su próxima fecha límite.", "fields": { "task_uid": { "name": "UUID de la tarea", "description": "UUID de la tarea que se marcará como completada." }, "done_by": { "name": "Completada por", "description": "Nombre registrado en el historial. El valor predeterminado es Automation." } } }
